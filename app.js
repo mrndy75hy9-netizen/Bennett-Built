@@ -1,3 +1,4 @@
+
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-app.js";
 import {
   getFirestore,
@@ -27,11 +28,20 @@ const db = getFirestore(app);
 const auth = getAuth(app);
 
 function value(id) {
-  return document.getElementById(id).value;
+  return document.getElementById(id)?.value || "";
 }
 
+function setResults(html) {
+  document.getElementById("results").innerHTML = html;
+}
+
+function card(html) {
+  return `<div class="resultCard">${html}</div>`;
+}
+
+/* PUBLIC CUSTOMER FORM */
 window.saveCustomer = async function () {
-  await addDoc(collection(db, "customers"), {
+  const data = {
     name: value("custName"),
     phone: value("custPhone"),
     email: value("custEmail"),
@@ -41,21 +51,29 @@ window.saveCustomer = async function () {
     status: "New",
     priority: "Normal",
     createdAt: new Date()
-  });
+  };
+
+  if (!data.name || !data.phone) {
+    alert("Enter customer name and phone.");
+    return;
+  }
+
+  await addDoc(collection(db, "customers"), data);
 
   await addDoc(collection(db, "vehicles"), {
-    customerName: value("custName"),
-    phone: value("custPhone"),
-    vehicle: value("vehicleInfo"),
-    vin: value("vin"),
+    customerName: data.name,
+    phone: data.phone,
+    vehicle: data.vehicle,
+    vin: data.vin,
     createdAt: new Date()
   });
 
   alert("Customer saved!");
 };
 
+/* APPOINTMENT REQUEST */
 window.saveAppointment = async function () {
-  await addDoc(collection(db, "appointments"), {
+  const data = {
     name: value("apptName"),
     phone: value("apptPhone"),
     vehicle: value("apptVehicle"),
@@ -64,24 +82,38 @@ window.saveAppointment = async function () {
     service: value("apptService"),
     status: "Requested",
     createdAt: new Date()
-  });
+  };
 
+  if (!data.name || !data.phone || !data.date) {
+    alert("Enter name, phone, and appointment date.");
+    return;
+  }
+
+  await addDoc(collection(db, "appointments"), data);
   alert("Appointment request saved!");
 };
 
+/* ESTIMATE REQUEST */
 window.saveEstimate = async function () {
-  await addDoc(collection(db, "estimates"), {
+  const data = {
     name: value("estName"),
     phone: value("estPhone"),
     vehicle: value("estVehicle"),
     details: value("estDetails"),
     status: "New Estimate",
     createdAt: new Date()
-  });
+  };
 
+  if (!data.name || !data.phone || !data.details) {
+    alert("Enter name, phone, and job details.");
+    return;
+  }
+
+  await addDoc(collection(db, "estimates"), data);
   alert("Estimate request saved!");
 };
 
+/* AUTH */
 window.login = async function () {
   try {
     await signInWithEmailAndPassword(
@@ -113,8 +145,9 @@ onAuthStateChanged(auth, (user) => {
   }
 });
 
+/* EMPLOYEE JOB LOG */
 window.saveServiceLog = async function () {
-  await addDoc(collection(db, "serviceLogs"), {
+  const data = {
     customer: value("jobCustomer"),
     vehicle: value("jobVehicle"),
     assignedTo: value("assignedTo"),
@@ -123,30 +156,59 @@ window.saveServiceLog = async function () {
     partsNeeded: value("partsNeeded"),
     laborNotes: value("laborNotes"),
     internalNotes: value("internalJobNotes"),
+    paymentStatus: value("paymentStatus"),
+    paperwork: value("paperwork"),
+    followUpDate: value("followUpDate"),
     createdAt: new Date(),
     lastUpdated: new Date()
-  });
+  };
 
+  if (!data.customer || !data.vehicle) {
+    alert("Enter customer and vehicle.");
+    return;
+  }
+
+  await addDoc(collection(db, "serviceLogs"), data);
   alert("Job log saved!");
   updateCounts();
 };
 
+/* EMPLOYEE TASKS */
 window.saveTask = async function () {
-  await addDoc(collection(db, "employeeTasks"), {
+  const data = {
     title: value("taskTitle"),
     assignedTo: value("taskAssigned"),
     dueDate: value("taskDue"),
     status: "Open",
     createdAt: new Date()
-  });
+  };
 
+  if (!data.title) {
+    alert("Enter a task.");
+    return;
+  }
+
+  await addDoc(collection(db, "employeeTasks"), data);
   alert("Task saved!");
 };
 
-function card(html) {
-  return `<div class="resultCard">${html}</div>`;
-}
+/* INTERNAL NOTES */
+window.saveInternalNote = async function () {
+  const data = {
+    note: value("internalNote"),
+    createdAt: new Date()
+  };
 
+  if (!data.note) {
+    alert("Enter a note.");
+    return;
+  }
+
+  await addDoc(collection(db, "internalNotes"), data);
+  alert("Internal note saved!");
+};
+
+/* LOADERS */
 window.loadCustomers = async function () {
   const snap = await getDocs(collection(db, "customers"));
   let html = "<h3>Customers</h3>";
@@ -160,12 +222,31 @@ window.loadCustomers = async function () {
       Phone: ${c.phone || ""}<br>
       Email: ${c.email || ""}<br>
       Vehicle: ${c.vehicle || ""}<br>
+      VIN: ${c.vin || ""}<br>
       Issue: ${c.issue || ""}<br>
       <span class="badge">${c.status || "New"}</span>
+      <span class="badge">${c.priority || "Normal"}</span>
     `);
   });
 
-  document.getElementById("results").innerHTML = html;
+  setResults(html);
+};
+
+window.loadVehicles = async function () {
+  const snap = await getDocs(collection(db, "vehicles"));
+  let html = "<h3>Vehicles</h3>";
+
+  snap.forEach(doc => {
+    const v = doc.data();
+    html += card(`
+      <strong>${v.vehicle || ""}</strong><br>
+      Customer: ${v.customerName || ""}<br>
+      Phone: ${v.phone || ""}<br>
+      VIN: ${v.vin || ""}
+    `);
+  });
+
+  setResults(html);
 };
 
 window.loadAppointments = async function () {
@@ -186,7 +267,7 @@ window.loadAppointments = async function () {
     `);
   });
 
-  document.getElementById("results").innerHTML = html;
+  setResults(html);
 };
 
 window.loadEstimates = async function () {
@@ -205,7 +286,7 @@ window.loadEstimates = async function () {
     `);
   });
 
-  document.getElementById("results").innerHTML = html;
+  setResults(html);
 };
 
 window.loadJobs = async function () {
@@ -218,15 +299,18 @@ window.loadJobs = async function () {
       <strong>${j.customer || ""}</strong><br>
       Vehicle: ${j.vehicle || ""}<br>
       Assigned: ${j.assignedTo || ""}<br>
-      Parts: ${j.partsNeeded || ""}<br>
+      Parts Needed: ${j.partsNeeded || ""}<br>
       Labor Notes: ${j.laborNotes || ""}<br>
       Internal Notes: ${j.internalNotes || ""}<br>
-      Priority: ${j.priority || ""}<br>
+      Payment: ${j.paymentStatus || ""}<br>
+      Paperwork: ${j.paperwork || ""}<br>
+      Follow-up: ${j.followUpDate || ""}<br>
       <span class="badge">${j.status || ""}</span>
+      <span class="badge">${j.priority || ""}</span>
     `);
   });
 
-  document.getElementById("results").innerHTML = html;
+  setResults(html);
 };
 
 window.loadTasks = async function () {
@@ -243,9 +327,24 @@ window.loadTasks = async function () {
     `);
   });
 
-  document.getElementById("results").innerHTML = html;
+  setResults(html);
 };
 
+window.loadInternalNotes = async function () {
+  const snap = await getDocs(collection(db, "internalNotes"));
+  let html = "<h3>Internal Notes</h3>";
+
+  snap.forEach(doc => {
+    const n = doc.data();
+    html += card(`
+      ${n.note || ""}
+    `);
+  });
+
+  setResults(html);
+};
+
+/* DASHBOARD COUNTS */
 async function updateCounts() {
   const jobs = await getDocs(collection(db, "serviceLogs"));
 
@@ -260,7 +359,11 @@ async function updateCounts() {
     if (j.status === "Ready for Pickup") ready++;
   });
 
-  document.getElementById("activeCount").innerText = active;
-  document.getElementById("partsCount").innerText = parts;
-  document.getElementById("readyCount").innerText = ready;
+  const activeEl = document.getElementById("activeCount");
+  const partsEl = document.getElementById("partsCount");
+  const readyEl = document.getElementById("readyCount");
+
+  if (activeEl) activeEl.innerText = active;
+  if (partsEl) partsEl.innerText = parts;
+  if (readyEl) readyEl.innerText = ready;
 }
