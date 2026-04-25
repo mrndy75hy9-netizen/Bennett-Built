@@ -245,13 +245,38 @@
   </section>
 
   <section id="dashJobs" class="dashPage hidden">
-    <div class="formCard">
-      <h3>Add Job</h3>
-      <input id="jobCustomer" placeholder="Customer">
-      <input id="jobVehicle" placeholder="Vehicle / project">
-      <textarea id="laborNotes" placeholder="Notes"></textarea>
-      <button onclick="saveServiceLog()">Save</button>
-    </div>
+   <div class="formCard">
+  <h3>Create Job</h3>
+
+  <input id="jobCustomer" placeholder="Customer name">
+  <input id="jobVehicle" placeholder="Vehicle / project">
+
+  <select id="jobStatus">
+    <option>New</option>
+    <option>Diagnosing</option>
+    <option>In Progress</option>
+    <option>Waiting on Parts</option>
+    <option>Ready for Pickup</option>
+    <option>Completed</option>
+    <option>Paid</option>
+  </select>
+
+  <select id="priority">
+    <option>Normal</option>
+    <option>Urgent</option>
+    <option>Low</option>
+  </select>
+
+  <textarea id="partsNeeded" placeholder="Parts needed"></textarea>
+  <textarea id="laborNotes" placeholder="Labor / work notes"></textarea>
+  <textarea id="internalJobNotes" placeholder="Internal notes"></textarea>
+
+  <label>Upload job photos</label>
+  <input id="jobFiles" type="file" multiple>
+
+  <button onclick="saveServiceLog()">Save Job</button>
+  <button onclick="loadJobs()" class="ghostBtn">View Jobs</button>
+</div>
   </section>
 
   <section id="dashTasks" class="dashPage hidden">
