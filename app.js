@@ -55,25 +55,7 @@ function setResults(html) {
 }
 
 function safeFileName(name) {
-  return name
-    .replace(/\s+/g, "-")
-    .replace(/[^a-zA-Z0-9._-]/g, "");
-}
-
-function getStatusClass(status) {
-  const s = String(status || "").toLowerCase();
-
-  if (s.includes("urgent")) return "urgentCard";
-  if (s.includes("waiting")) return "waitingCard";
-  if (s.includes("ready")) return "readyCard";
-  if (s.includes("completed") || s.includes("paid")) return "doneCard";
-
-  return "";
-}
-
-function card(html, status = "") {
-  const statusClass = getStatusClass(status);
-  return `<div class="resultCard ${statusClass}">${html}</div>`;
+  return name.replace(/\s+/g, "-").replace(/[^a-zA-Z0-9._-]/g, "");
 }
 
 async function uploadFiles(inputId, folderName) {
@@ -110,7 +92,7 @@ async function renderFileLinks(files = []) {
       const fileRef = ref(storage, file.path);
       const url = await getDownloadURL(fileRef);
       html += `<a href="${url}" target="_blank">${file.name}</a><br>`;
-    } catch (error) {
+    } catch {
       html += `<span>${file.name} - link unavailable</span><br>`;
     }
   }
@@ -118,44 +100,53 @@ async function renderFileLinks(files = []) {
   return html;
 }
 
-/* NAVIGATION */
+function card(html) {
+  return `<div class="resultCard">${html}</div>`;
+}
 
-window.showTab = function (tabId) {
-  document.querySelectorAll(".tabPage").forEach(page => {
-    page.classList.add("hidden");
+/* NAV */
+
+window.showTab = function (id) {
+  document.querySelectorAll(".tabPage").forEach(section => {
+    section.classList.add("hidden");
   });
 
-  const selected = document.getElementById(tabId);
-  if (selected) selected.classList.remove("hidden");
+  const target = document.getElementById(id);
+  if (target) target.classList.remove("hidden");
 
-  window.scrollTo({ top: 0, behavior: "smooth" });
+  document.querySelectorAll(".mainTabs button").forEach(btn => {
+    btn.classList.remove("activeTab");
+  });
+
+  const clicked = [...document.querySelectorAll(".mainTabs button")]
+    .find(btn => btn.getAttribute("onclick")?.includes(id));
+
+  if (clicked) clicked.classList.add("activeTab");
 };
 
-window.showDash = function (tabId) {
-  document.querySelectorAll(".dashPage").forEach(page => {
-    page.classList.add("hidden");
+window.showDash = function (id) {
+  document.querySelectorAll(".dashPage").forEach(section => {
+    section.classList.add("hidden");
   });
 
-  const selected = document.getElementById(tabId);
-  if (selected) selected.classList.remove("hidden");
+  const target = document.getElementById(id);
+  if (target) target.classList.remove("hidden");
 
   setResults("");
 };
 
-/* PUBLIC FORM SAVES */
+/* CUSTOMER FORMS */
 
 window.saveCustomer = async function () {
   const name = value("custName");
   const phone = value("custPhone");
 
   if (!name || !phone) {
-    alert("Please enter customer name and phone.");
+    alert("Please enter name and phone.");
     return;
   }
 
   try {
-    alert("Saving customer and uploading files...");
-
     const files = await uploadFiles("custFiles", "publicUploads/customer-intake");
 
     const data = {
@@ -167,15 +158,14 @@ window.saveCustomer = async function () {
       issue: value("issue"),
       files,
       status: "New",
-      priority: "Normal",
       createdAt: new Date()
     };
 
     await addDoc(collection(db, "customers"), data);
 
     await addDoc(collection(db, "vehicles"), {
-      customerName: data.name,
-      phone: data.phone,
+      customerName: name,
+      phone,
       vehicle: data.vehicle,
       vin: data.vin,
       files,
@@ -190,10 +180,9 @@ window.saveCustomer = async function () {
     clearValue("issue");
     clearFiles("custFiles");
 
-    alert("Customer intake saved!");
+    alert("Got it. We’ll take a look.");
   } catch (error) {
-    console.error(error);
-    alert("Error saving customer: " + error.message);
+    alert("Error saving intake: " + error.message);
   }
 };
 
@@ -203,13 +192,11 @@ window.saveAppointment = async function () {
   const date = value("apptDate");
 
   if (!name || !phone || !date) {
-    alert("Please enter name, phone, and requested date.");
+    alert("Please enter name, phone, and date.");
     return;
   }
 
   try {
-    alert("Saving appointment and uploading files...");
-
     const files = await uploadFiles("apptFiles", "publicUploads/appointments");
 
     await addDoc(collection(db, "appointments"), {
@@ -224,17 +211,8 @@ window.saveAppointment = async function () {
       createdAt: new Date()
     });
 
-    clearValue("apptName");
-    clearValue("apptPhone");
-    clearValue("apptVehicle");
-    clearValue("apptDate");
-    clearValue("apptTime");
-    clearValue("apptService");
-    clearFiles("apptFiles");
-
-    alert("Appointment request saved!");
+    alert("Appointment request sent.");
   } catch (error) {
-    console.error(error);
     alert("Error saving appointment: " + error.message);
   }
 };
@@ -245,13 +223,11 @@ window.saveEstimate = async function () {
   const details = value("estDetails");
 
   if (!name || !phone || !details) {
-    alert("Please enter name, phone, and job details.");
+    alert("Please enter name, phone, and details.");
     return;
   }
 
   try {
-    alert("Saving estimate and uploading files...");
-
     const files = await uploadFiles("estFiles", "publicUploads/estimates");
 
     await addDoc(collection(db, "estimates"), {
@@ -264,15 +240,8 @@ window.saveEstimate = async function () {
       createdAt: new Date()
     });
 
-    clearValue("estName");
-    clearValue("estPhone");
-    clearValue("estVehicle");
-    clearValue("estDetails");
-    clearFiles("estFiles");
-
-    alert("Estimate request saved!");
+    alert("Estimate request sent.");
   } catch (error) {
-    console.error(error);
     alert("Error saving estimate: " + error.message);
   }
 };
@@ -286,8 +255,6 @@ window.login = async function () {
       value("loginEmail"),
       value("loginPassword")
     );
-
-    clearValue("loginPassword");
   } catch (error) {
     alert(error.message);
   }
@@ -312,20 +279,18 @@ onAuthStateChanged(auth, (user) => {
   }
 });
 
-/* EMPLOYEE SAVES */
+/* EMPLOYEE DASHBOARD SAVES */
 
 window.saveServiceLog = async function () {
   const customer = value("jobCustomer");
   const vehicle = value("jobVehicle");
 
   if (!customer || !vehicle) {
-    alert("Enter customer and vehicle.");
+    alert("Enter customer and vehicle/project.");
     return;
   }
 
   try {
-    alert("Saving job and uploading files...");
-
     const files = await uploadFiles("jobFiles", "shopFiles/job-logs");
 
     await addDoc(collection(db, "serviceLogs"), {
@@ -345,21 +310,9 @@ window.saveServiceLog = async function () {
       lastUpdated: new Date()
     });
 
-    clearValue("jobCustomer");
-    clearValue("jobVehicle");
-    clearValue("assignedTo");
-    clearValue("partsNeeded");
-    clearValue("laborNotes");
-    clearValue("internalJobNotes");
-    clearValue("paymentStatus");
-    clearValue("paperwork");
-    clearValue("followUpDate");
-    clearFiles("jobFiles");
-
-    alert("Job log saved!");
+    alert("Job saved.");
     updateCounts();
   } catch (error) {
-    console.error(error);
     alert("Error saving job: " + error.message);
   }
 };
@@ -372,24 +325,15 @@ window.saveTask = async function () {
     return;
   }
 
-  try {
-    await addDoc(collection(db, "employeeTasks"), {
-      title,
-      assignedTo: value("taskAssigned"),
-      dueDate: value("taskDue"),
-      status: "Open",
-      createdAt: new Date()
-    });
+  await addDoc(collection(db, "employeeTasks"), {
+    title,
+    assignedTo: value("taskAssigned"),
+    dueDate: value("taskDue"),
+    status: "Open",
+    createdAt: new Date()
+  });
 
-    clearValue("taskTitle");
-    clearValue("taskAssigned");
-    clearValue("taskDue");
-
-    alert("Task saved!");
-  } catch (error) {
-    console.error(error);
-    alert("Error saving task: " + error.message);
-  }
+  alert("Task saved.");
 };
 
 window.saveInternalNote = async function () {
@@ -400,22 +344,15 @@ window.saveInternalNote = async function () {
     return;
   }
 
-  try {
-    await addDoc(collection(db, "internalNotes"), {
-      note,
-      createdAt: new Date()
-    });
+  await addDoc(collection(db, "internalNotes"), {
+    note,
+    createdAt: new Date()
+  });
 
-    clearValue("internalNote");
-
-    alert("Internal note saved!");
-  } catch (error) {
-    console.error(error);
-    alert("Error saving note: " + error.message);
-  }
+  alert("Note saved.");
 };
 
-/* LOADERS */
+/* LOAD RECORDS */
 
 window.loadCustomers = async function () {
   const snap = await getDocs(collection(db, "customers"));
@@ -423,7 +360,7 @@ window.loadCustomers = async function () {
 
   for (const doc of snap.docs) {
     const c = doc.data();
-    const fileLinks = await renderFileLinks(c.files);
+    const files = await renderFileLinks(c.files);
 
     html += card(`
       <strong>${c.name || ""}</strong><br>
@@ -431,13 +368,12 @@ window.loadCustomers = async function () {
       <a href="sms:${c.phone || ""}">Text</a><br>
       Phone: ${c.phone || ""}<br>
       Email: ${c.email || ""}<br>
-      Vehicle: ${c.vehicle || ""}<br>
+      Vehicle/Project: ${c.vehicle || ""}<br>
       VIN: ${c.vin || ""}<br>
       Issue: ${c.issue || ""}<br>
       <span class="badge">${c.status || "New"}</span>
-      <span class="badge">${c.priority || "Normal"}</span>
-      ${fileLinks}
-    `, c.status);
+      ${files}
+    `);
   }
 
   setResults(html);
@@ -445,19 +381,18 @@ window.loadCustomers = async function () {
 
 window.loadVehicles = async function () {
   const snap = await getDocs(collection(db, "vehicles"));
-  let html = "<h3>Vehicles</h3>";
+  let html = "<h3>Vehicles / Projects</h3>";
 
   for (const doc of snap.docs) {
     const v = doc.data();
-    const fileLinks = await renderFileLinks(v.files);
+    const files = await renderFileLinks(v.files);
 
     html += card(`
       <strong>${v.vehicle || ""}</strong><br>
       Customer: ${v.customerName || ""}<br>
-      <a href="tel:${v.phone || ""}">Call</a> |
-      <a href="sms:${v.phone || ""}">Text</a><br>
+      Phone: ${v.phone || ""}<br>
       VIN: ${v.vin || ""}
-      ${fileLinks}
+      ${files}
     `);
   }
 
@@ -470,19 +405,19 @@ window.loadAppointments = async function () {
 
   for (const doc of snap.docs) {
     const a = doc.data();
-    const fileLinks = await renderFileLinks(a.files);
+    const files = await renderFileLinks(a.files);
 
     html += card(`
       <strong>${a.name || ""}</strong><br>
       <a href="tel:${a.phone || ""}">Call</a> |
       <a href="sms:${a.phone || ""}">Text</a><br>
-      Vehicle: ${a.vehicle || ""}<br>
+      Vehicle/Project: ${a.vehicle || ""}<br>
       Date: ${a.date || ""}<br>
       Time: ${a.time || ""}<br>
       Service: ${a.service || ""}<br>
       <span class="badge">${a.status || ""}</span>
-      ${fileLinks}
-    `, a.status);
+      ${files}
+    `);
   }
 
   setResults(html);
@@ -494,17 +429,17 @@ window.loadEstimates = async function () {
 
   for (const doc of snap.docs) {
     const e = doc.data();
-    const fileLinks = await renderFileLinks(e.files);
+    const files = await renderFileLinks(e.files);
 
     html += card(`
       <strong>${e.name || ""}</strong><br>
       <a href="tel:${e.phone || ""}">Call</a> |
       <a href="sms:${e.phone || ""}">Text</a><br>
-      Vehicle: ${e.vehicle || ""}<br>
+      Vehicle/Project: ${e.vehicle || ""}<br>
       Details: ${e.details || ""}<br>
       <span class="badge">${e.status || ""}</span>
-      ${fileLinks}
-    `, e.status);
+      ${files}
+    `);
   }
 
   setResults(html);
@@ -512,26 +447,26 @@ window.loadEstimates = async function () {
 
 window.loadJobs = async function () {
   const snap = await getDocs(collection(db, "serviceLogs"));
-  let html = "<h3>Service / Job Logs</h3>";
+  let html = "<h3>Jobs</h3>";
 
   for (const doc of snap.docs) {
     const j = doc.data();
-    const fileLinks = await renderFileLinks(j.files);
+    const files = await renderFileLinks(j.files);
 
     html += card(`
       <strong>${j.customer || ""}</strong><br>
-      Vehicle: ${j.vehicle || ""}<br>
+      Vehicle/Project: ${j.vehicle || ""}<br>
       Assigned: ${j.assignedTo || ""}<br>
-      Parts Needed: ${j.partsNeeded || ""}<br>
-      Labor Notes: ${j.laborNotes || ""}<br>
-      Internal Notes: ${j.internalNotes || ""}<br>
+      Status: ${j.status || ""}<br>
+      Priority: ${j.priority || ""}<br>
+      Parts: ${j.partsNeeded || ""}<br>
+      Labor: ${j.laborNotes || ""}<br>
+      Notes: ${j.internalNotes || ""}<br>
       Payment: ${j.paymentStatus || ""}<br>
       Paperwork: ${j.paperwork || ""}<br>
-      Follow-up: ${j.followUpDate || ""}<br>
-      <span class="badge">${j.status || ""}</span>
-      <span class="badge">${j.priority || ""}</span>
-      ${fileLinks}
-    `, j.status || j.priority);
+      Follow-up: ${j.followUpDate || ""}
+      ${files}
+    `);
   }
 
   setResults(html);
@@ -540,7 +475,7 @@ window.loadJobs = async function () {
 
 window.loadTasks = async function () {
   const snap = await getDocs(collection(db, "employeeTasks"));
-  let html = "<h3>Employee Tasks</h3>";
+  let html = "<h3>Tasks</h3>";
 
   snap.forEach(doc => {
     const t = doc.data();
@@ -549,8 +484,8 @@ window.loadTasks = async function () {
       <strong>${t.title || ""}</strong><br>
       Assigned: ${t.assignedTo || ""}<br>
       Due: ${t.dueDate || ""}<br>
-      <span class="badge">${t.status || ""}</span>
-    `, t.status);
+      Status: ${t.status || ""}
+    `);
   });
 
   setResults(html);
@@ -562,10 +497,7 @@ window.loadInternalNotes = async function () {
 
   snap.forEach(doc => {
     const n = doc.data();
-
-    html += card(`
-      ${n.note || ""}
-    `);
+    html += card(`${n.note || ""}`);
   });
 
   setResults(html);
@@ -581,8 +513,7 @@ async function updateCounts() {
   let ready = 0;
 
   jobs.forEach(doc => {
-    const j = doc.data();
-    const status = j.status || "";
+    const status = doc.data().status || "";
 
     if (status !== "Completed" && status !== "Paid") active++;
     if (status === "Waiting on Parts") parts++;
@@ -597,3 +528,9 @@ async function updateCounts() {
   if (partsEl) partsEl.innerText = parts;
   if (readyEl) readyEl.innerText = ready;
 }
+
+/* DEFAULT */
+
+document.addEventListener("DOMContentLoaded", () => {
+  showTab("home");
+});
