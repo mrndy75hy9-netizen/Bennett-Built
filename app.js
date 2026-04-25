@@ -286,34 +286,32 @@ window.saveServiceLog = async function () {
   const vehicle = value("jobVehicle");
 
   if (!customer || !vehicle) {
-    alert("Enter customer and vehicle/project.");
+    alert("Need customer and vehicle/project.");
     return;
   }
 
   try {
-    const files = await uploadFiles("jobFiles", "shopFiles/job-logs");
+    alert("Saving job...");
+
+    const files = await uploadFiles("jobFiles", "jobs");
 
     await addDoc(collection(db, "serviceLogs"), {
       customer,
       vehicle,
-      assignedTo: value("assignedTo"),
       status: value("jobStatus"),
       priority: value("priority"),
       partsNeeded: value("partsNeeded"),
       laborNotes: value("laborNotes"),
       internalNotes: value("internalJobNotes"),
-      paymentStatus: value("paymentStatus"),
-      paperwork: value("paperwork"),
-      followUpDate: value("followUpDate"),
       files,
-      createdAt: new Date(),
-      lastUpdated: new Date()
+      createdAt: new Date()
     });
 
     alert("Job saved.");
-    updateCounts();
-  } catch (error) {
-    alert("Error saving job: " + error.message);
+    loadJobs();
+
+  } catch (err) {
+    alert("Error: " + err.message);
   }
 };
 
@@ -447,30 +445,30 @@ window.loadEstimates = async function () {
 
 window.loadJobs = async function () {
   const snap = await getDocs(collection(db, "serviceLogs"));
+
   let html = "<h3>Jobs</h3>";
 
   for (const doc of snap.docs) {
     const j = doc.data();
     const files = await renderFileLinks(j.files);
 
-    html += card(`
-      <strong>${j.customer || ""}</strong><br>
-      Vehicle/Project: ${j.vehicle || ""}<br>
-      Assigned: ${j.assignedTo || ""}<br>
-      Status: ${j.status || ""}<br>
-      Priority: ${j.priority || ""}<br>
-      Parts: ${j.partsNeeded || ""}<br>
-      Labor: ${j.laborNotes || ""}<br>
-      Notes: ${j.internalNotes || ""}<br>
-      Payment: ${j.paymentStatus || ""}<br>
-      Paperwork: ${j.paperwork || ""}<br>
-      Follow-up: ${j.followUpDate || ""}
-      ${files}
-    `);
+    html += `
+      <div class="resultCard">
+        <strong>${j.customer}</strong><br>
+        ${j.vehicle}<br><br>
+
+        <b>Status:</b> ${j.status}<br>
+        <b>Priority:</b> ${j.priority}<br><br>
+
+        <b>Parts:</b><br>${j.partsNeeded || "—"}<br><br>
+        <b>Work Notes:</b><br>${j.laborNotes || "—"}<br><br>
+
+        ${files}
+      </div>
+    `;
   }
 
   setResults(html);
-  updateCounts();
 };
 
 window.loadTasks = async function () {
