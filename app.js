@@ -367,3 +367,17 @@ async function updateCounts() {
   if (partsEl) partsEl.innerText = parts;
   if (readyEl) readyEl.innerText = ready;
 }
+window.showTab = function (tabId) {
+  document.querySelectorAll(".tabPage").forEach(page => {
+    page.classList.add("hidden");
+  });
+  document.getElementById(tabId).classList.remove("hidden");
+};
+
+window.showDash = function (tabId) {
+  document.querySelectorAll(".dashPage").forEach(page => {
+    page.classList.add("hidden");
+  });
+  document.getElementById(tabId).classList.remove("hidden");
+  document.getElementById("results").innerHTML = "";
+};
