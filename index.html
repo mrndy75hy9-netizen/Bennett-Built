@@ -50,8 +50,9 @@
 </nav>
 
 <main>
-
 <section id="home" class="tabPage">
+
+  <!-- HERO / INTRO -->
   <div class="featureHero shopPanel">
     <div>
       <p class="eyebrow">Start here</p>
@@ -69,9 +70,92 @@
         If you’ve ever stood there staring at it thinking “that shouldn’t be doing that,” you’re in the right place.
       </p>
 
+      <div class="sectionButtons">
+        <button onclick="showTab('intake')">Tell Us What’s Going On</button>
+        <button onclick="showTab('services')" class="ghostBtn">What We Handle</button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- PROCESS STRIP -->
+  <div class="processStrip">
+    <div>Bring it in</div>
+    <div>We track it down</div>
+    <div>We fix what’s wrong</div>
+    <div>You’re back on the road</div>
+  </div>
+
+
+  <!-- CARDS -->
+  <div class="quickGrid">
+    <div class="miniCard">
+      <span>01</span>
+      <h3>Bring it as-is</h3>
       <p>
-        We don’t guess. We go through it until it makes sense.
+        Doesn’t need to be cleaned up or figured out first. Half the time it doesn’t make sense yet anyway.
       </p>
+    </div>
+
+    <div class="miniCard">
+      <span>02</span>
+      <h3>We go through it</h3>
+      <p>
+        No guessing, no parts roulette. We work through it until it actually adds up.
+      </p>
+    </div>
+
+    <div class="miniCard">
+      <span>03</span>
+      <h3>Fix what’s actually wrong</h3>
+      <p>
+        Not the symptom. Not the guess. The actual problem.
+      </p>
+    </div>
+  </div>
+
+
+  <!-- COMMON PROBLEMS (RELATABLE SECTION) -->
+  <div class="shopStrip">
+    <h3>Stuff we see all the time</h3>
+
+    <ul>
+      <li>“It only does it sometimes”</li>
+      <li>“It started after I fixed something else”</li>
+      <li>“It was fine yesterday”</li>
+      <li>“Nobody else could figure it out”</li>
+    </ul>
+  </div>
+
+
+  <!-- SERVICE PREVIEW -->
+  <div class="servicePreview">
+    <h3>What we handle</h3>
+
+    <div class="servicePreviewGrid">
+      <div>Diagnostics</div>
+      <div>Repair</div>
+      <div>Fabrication</div>
+      <div>Hydraulics</div>
+      <div>Equipment</div>
+      <div>Custom Work</div>
+    </div>
+
+    <button onclick="showTab('services')">See All Services</button>
+  </div>
+
+
+  <!-- CALL TO ACTION -->
+  <div class="ctaBlock">
+    <h3>Got something acting up?</h3>
+    <p>
+      Don’t overthink it. Send it in and we’ll go from there.
+    </p>
+
+    <button onclick="showTab('intake')">Start Here</button>
+  </div>
+
+</section>
 
       <div class="sectionButtons">
         <button onclick="showTab('intake')">Send Us the Situation</button>
