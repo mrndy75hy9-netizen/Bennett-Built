@@ -8,8 +8,6 @@
 
 <body>
 
-<!-- ================= HERO ================= -->
-
 <header class="siteHero">
   <div class="heroOverlay">
     <div class="brandWrap">
@@ -19,59 +17,113 @@
       </div>
 
       <div class="brandText">
+        <p class="eyebrow">Repair • Fabrication • Diagnostics</p>
         <h1>Bennett Built Automotive & Fab</h1>
         <p class="tagline">Yeah... we can fix that.</p>
 
         <p class="heroCopy">
-          Diagnostics, fabrication, repairs, and the stuff that doesn’t come with a clear answer.
+          If it’s not right, we’ll figure it out.
+        </p>
+
+        <p class="heroCopy">
+          Cars, equipment, custom work, and the stuff that doesn’t come with a clear answer.
         </p>
 
         <div class="heroButtons">
-          <button onclick="showTab('intake')">Tell Us What’s Going On</button>
-          <button onclick="showTab('estimates')" class="accentBtn">Get a Ballpark</button>
-          <button onclick="showTab('loginArea')" class="ghostBtn">Employee Login</button>
+          <button onclick="showTab('intake')">Tell Us What It’s Doing</button>
+          <button onclick="showTab('estimates')" class="accentBtn">Give Us the Basics</button>
+          <button onclick="showTab('loginArea')" class="ghostBtn">Shop Login</button>
         </div>
-      </div>
 
+      </div>
     </div>
   </div>
 </header>
 
-<!-- ================= NAV ================= -->
-
 <nav class="mainTabs">
-  <button onclick="showTab('home')">Home</button>
-  <button onclick="showTab('meet')">Meet</button>
-  <button onclick="showTab('services')">Work</button>
+  <button onclick="showTab('home')">Start Here</button>
+  <button onclick="showTab('meet')">The Bennetts</button>
+  <button onclick="showTab('services')">What We Fix</button>
   <button onclick="showTab('reviews')">Reviews</button>
-  <button onclick="showTab('intake')">Forms</button>
-  <button onclick="showTab('appointments')">Appointments</button>
-  <button onclick="showTab('estimates')">Estimates</button>
+  <button onclick="showTab('intake')">Customer Form</button>
+  <button onclick="showTab('appointments')">Schedule</button>
+  <button onclick="showTab('estimates')">Estimate</button>
   <button onclick="showTab('loginArea')">Employee</button>
 </nav>
 
 <main>
 
-<!-- ================= HOME ================= -->
-
+<!-- HOME -->
 <section id="home" class="tabPage">
-  <div class="featureHero">
+  <div class="featureHero shopPanel">
     <div>
+
+      <p class="eyebrow">Start here</p>
       <h2>Some jobs are simple. Some ain’t.</h2>
+
       <p>
-        Sometimes it’s obvious. Sometimes it’s a full head-scratcher.
-        Either way, we start where it’s at and figure it out from there.
+        Some problems are obvious. Some show up with wrong parts, half-fixes, and a new noise nobody can explain.
+      </p>
+
+      <p>
+        We see both.
+      </p>
+
+      <p>
+        Tell us what it’s doing, what changed, and what’s already been tried.
+        Pictures help. Straight answers help more.
+      </p>
+
+      <p>
+        We’ll figure out what actually matters and go from there.
+      </p>
+
+      <div class="sectionButtons">
+        <button onclick="showTab('intake')">Tell Us What You’ve Got</button>
+        <button onclick="showTab('services')" class="ghostBtn">See What We Handle</button>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="quickGrid">
+
+    <div class="miniCard">
+      <span>01</span>
+      <h3>Tell us what you know</h3>
+      <p>
+        Name, phone, what it is, what it’s doing, and pictures if you have them.
+        You don’t need to diagnose it.
       </p>
     </div>
+
+    <div class="miniCard">
+      <span>02</span>
+      <h3>We sort out what matters</h3>
+      <p>
+        We look at the details, ask the right questions, and figure out the next move before anyone wastes time or money.
+      </p>
+    </div>
+
+    <div class="miniCard">
+      <span>03</span>
+      <h3>Nothing gets lost</h3>
+      <p>
+        Jobs, notes, photos, and updates stay in one place.
+        No chasing texts. No guessing what happened.
+      </p>
+    </div>
+
   </div>
 </section>
 
-<!-- ================= MEET ================= -->
-
+<!-- MEET -->
 <section id="meet" class="tabPage hidden">
-  <div class="pageBanner">
+  <div class="pageBanner meetBanner">
     <div>
+      <p class="eyebrow">Small shop. Real people.</p>
       <h2>Meet the Bennetts</h2>
+      <p>No middleman. No confusion. You talk to us, we handle it.</p>
     </div>
   </div>
 
@@ -79,229 +131,151 @@
 
     <div class="storyCard">
       <h3>Ivan Bennett</h3>
-      <p>
-        20+ years of fixing things that don’t make sense on paper.
-      </p>
-      <p>
-        If something’s already been looked at and still ain’t right,
-        that’s usually where he comes in.
-      </p>
+      <p class="roleTitle">Mechanic • Fabrication • Problem Solver</p>
+
+      <p>Over 20 years doing this.</p>
+      <p>He’s the one people call when the “easy fix” didn’t fix anything.</p>
+      <p>No guessing. No throwing parts at it hoping something works.</p>
+      <p>He figures out what’s actually wrong, then fixes it.</p>
+      <p>Some jobs need tools. Some need time. Some just need someone willing to actually look at it.</p>
     </div>
 
     <div class="storyCard">
       <h3>Nancy Bennett</h3>
-      <p>
-        Keeps everything from turning into chaos.
-      </p>
-      <p>
-        Makes sure nothing gets lost, forgotten, or buried.
-      </p>
+      <p class="roleTitle">Business Side • Customer Support</p>
+
+      <p>Keeps everything from turning into a mess.</p>
+      <p>Customers, jobs, notes, follow-ups. Nothing gets lost. Nothing gets ignored.</p>
+      <p>If you get clear answers and actual updates, that’s her.</p>
     </div>
 
   </div>
 </section>
 
-<!-- ================= SERVICES ================= -->
-
+<!-- SERVICES -->
 <section id="services" class="tabPage hidden">
-  <div class="pageBanner">
+  <div class="pageBanner servicesBanner">
     <div>
-      <h2>What we work on</h2>
-      <p>From normal repairs to “what even is that” situations.</p>
+      <p class="eyebrow">What we fix</p>
+      <h2>The normal stuff and the stuff nobody wants</h2>
+
+      <p>If it makes sense, we fix it.</p>
+      <p>If it doesn’t, we figure out why first.</p>
     </div>
   </div>
 
   <div class="serviceGrid">
-    <div class="serviceCard"><h3>Diagnostics</h3></div>
-    <div class="serviceCard"><h3>Mechanical Repair</h3></div>
-    <div class="serviceCard"><h3>Fabrication / Welding</h3></div>
-    <div class="serviceCard"><h3>Hydraulics / Pneumatics</h3></div>
-    <div class="serviceCard"><h3>Equipment / Motors</h3></div>
-    <div class="serviceCard"><h3>Head-Scratchers</h3></div>
+    <div class="serviceCard"><h3>Diagnostics</h3><p>We find the problem.</p></div>
+    <div class="serviceCard"><h3>Repairs</h3><p>We fix it right.</p></div>
+    <div class="serviceCard"><h3>Fabrication</h3><p>We build what’s needed.</p></div>
+    <div class="serviceCard"><h3>Hydraulics</h3><p>Pressure problems handled.</p></div>
+    <div class="serviceCard"><h3>Equipment</h3><p>Work gear and small engines.</p></div>
+    <div class="serviceCard"><h3>Head-Scratchers</h3><p>If nobody else wants it, we will.</p></div>
+  </div>
+
+  <div class="disclaimerCard">
+    <h3>About estimates</h3>
+    <p>We give a starting point.</p>
+    <p>Until we see it, it’s a guess.</p>
+    <p>Better details = better answer.</p>
   </div>
 </section>
 
-<!-- ================= REVIEWS ================= -->
-
+<!-- REVIEWS -->
 <section id="reviews" class="tabPage hidden">
-  <div class="pageBanner">
+  <div class="pageBanner reviewsBanner">
     <div>
       <h2>What people say</h2>
-      <p>Real work, real feedback.</p>
+      <p>Good work. No runaround.</p>
     </div>
   </div>
 
   <div class="reviewsGrid">
-    <div class="reviewCard">“They actually explained it.”</div>
-    <div class="reviewCard">“Fixed something nobody else would touch.”</div>
-    <div class="reviewCard">“No runaround.”</div>
+    <div class="reviewCard">“They explained it clearly.”</div>
+    <div class="reviewCard">“Fixed what others wouldn’t touch.”</div>
+    <div class="reviewCard">“Didn’t waste my time.”</div>
+  </div>
+
+  <div class="reviewCTA">
+    <button onclick="showTab('intake')">Leave One</button>
   </div>
 </section>
 
-<!-- ================= INTAKE ================= -->
-
+<!-- INTAKE -->
 <section id="intake" class="tabPage hidden">
-  <div class="pageBanner">
+  <div class="pageBanner intakeBanner">
     <div>
-      <h2>Tell us what’s going on</h2>
+      <h2>Tell us what it’s doing</h2>
+      <p>Be straight about it. That’s all we need.</p>
     </div>
   </div>
 
   <div class="formCard">
     <input id="custName" placeholder="Name">
     <input id="custPhone" placeholder="Phone">
-    <input id="vehicleInfo" placeholder="Vehicle / equipment">
-    <textarea id="issue" placeholder="What’s it doing?"></textarea>
-
-    <label>Upload photos</label>
+    <input id="vehicleInfo" placeholder="Vehicle or equipment">
+    <textarea id="issue" placeholder="What is it doing? What changed? What has been tried?"></textarea>
     <input id="custFiles" type="file" multiple>
-
-    <button onclick="saveCustomer()">Send</button>
+    <button onclick="saveCustomer()">Send It Over</button>
   </div>
 </section>
 
-<!-- ================= APPOINTMENTS ================= -->
-
+<!-- APPOINTMENTS -->
 <section id="appointments" class="tabPage hidden">
-  <div class="pageBanner">
+  <div class="pageBanner appointmentBanner">
     <div>
-      <h2>Set up a time</h2>
+      <h2>Need it looked at?</h2>
+      <p>Send details and your availability.</p>
     </div>
   </div>
 
   <div class="formCard">
     <input id="apptName" placeholder="Name">
     <input id="apptPhone" placeholder="Phone">
-
-    <label>Pick a date</label>
     <input id="apptDate" type="date">
-
-    <label>Pick a time</label>
     <input id="apptTime" type="time">
-
-    <button onclick="saveAppointment()">Request</button>
+    <button onclick="saveAppointment()">Request a Time</button>
   </div>
 </section>
 
-<!-- ================= ESTIMATES ================= -->
-
+<!-- ESTIMATES -->
 <section id="estimates" class="tabPage hidden">
-  <div class="pageBanner">
+  <div class="pageBanner estimateBanner">
     <div>
-      <h2>Get a ballpark</h2>
-      <p>Easier to show than explain sometimes.</p>
+      <h2>Get a starting point</h2>
+      <p>We’ll give you the best answer we can with what we have.</p>
     </div>
   </div>
 
   <div class="formCard">
     <input id="estName" placeholder="Name">
-    <input id="estPhone" placeholder="Phone">
     <textarea id="estDetails" placeholder="What’s going on?"></textarea>
-    <input id="estFiles" type="file" multiple>
-
-    <button onclick="saveEstimate()">Send</button>
+    <button onclick="saveEstimate()">Get a Ballpark</button>
   </div>
 </section>
 
-<!-- ================= EMPLOYEE ================= -->
-
+<!-- EMPLOYEE -->
 <section id="loginArea" class="tabPage hidden">
   <div class="formCard">
     <h3>Employee Login</h3>
     <input id="loginEmail" placeholder="Email">
     <input id="loginPassword" type="password" placeholder="Password">
-    <button onclick="login()">Login</button>
+    <button onclick="login()">Get In</button>
   </div>
-</section>
-
-<!-- ================= DASHBOARD ================= -->
-
-<section id="dashboard" class="hidden dashboardShell">
-
-  <nav class="dashTabs">
-    <button onclick="showDash('dashOverview')">Overview</button>
-    <button onclick="showDash('dashJobs')">Jobs</button>
-    <button onclick="showDash('dashTasks')">Tasks</button>
-    <button onclick="showDash('dashNotes')">Notes</button>
-  </nav>
-
-  <section id="dashOverview" class="dashPage">
-    <div class="dashboardHeader">
-      <h2>Shop Dashboard</h2>
-      <p>Everything in one place so nothing gets lost.</p>
-    </div>
-
-    <div class="stats">
-      <div><strong id="activeCount">0</strong><span>Active</span></div>
-      <div><strong id="partsCount">0</strong><span>Waiting</span></div>
-      <div><strong id="readyCount">0</strong><span>Ready</span></div>
-    </div>
-
-    <div class="dashActions">
-      <button onclick="loadCustomers()">Customers</button>
-      <button onclick="loadJobs()">Jobs</button>
-      <button onclick="loadTasks()">Tasks</button>
-    </div>
-  </section>
-
-  <section id="dashJobs" class="dashPage hidden">
-   <div class="formCard">
-  <h3>Create Job</h3>
-
-  <input id="jobCustomer" placeholder="Customer name">
-  <input id="jobVehicle" placeholder="Vehicle / project">
-
-  <select id="jobStatus">
-    <option>New</option>
-    <option>Diagnosing</option>
-    <option>In Progress</option>
-    <option>Waiting on Parts</option>
-    <option>Ready for Pickup</option>
-    <option>Completed</option>
-    <option>Paid</option>
-  </select>
-
-  <select id="priority">
-    <option>Normal</option>
-    <option>Urgent</option>
-    <option>Low</option>
-  </select>
-
-  <textarea id="partsNeeded" placeholder="Parts needed"></textarea>
-  <textarea id="laborNotes" placeholder="Labor / work notes"></textarea>
-  <textarea id="internalJobNotes" placeholder="Internal notes"></textarea>
-
-  <label>Upload job photos</label>
-  <input id="jobFiles" type="file" multiple>
-
-  <button onclick="saveServiceLog()">Save Job</button>
-  <button onclick="loadJobs()" class="ghostBtn">View Jobs</button>
-</div>
-  </section>
-
-  <section id="dashTasks" class="dashPage hidden">
-    <div class="formCard">
-      <h3>Task</h3>
-      <input id="taskTitle" placeholder="Task">
-      <button onclick="saveTask()">Save</button>
-    </div>
-  </section>
-
-  <section id="dashNotes" class="dashPage hidden">
-    <div class="formCard">
-      <h3>Note</h3>
-      <textarea id="internalNote"></textarea>
-      <button onclick="saveInternalNote()">Save</button>
-    </div>
-  </section>
-
-  <div id="results"></div>
-
 </section>
 
 </main>
 
-<script type="module" src="app.js"></script>
+<footer>
+  <div class="footerGrid">
+    <div>
+      <h3>Bennett Built Automotive & Fab</h3>
+      <p>If it’s not right, we’ll figure it out.</p>
+    </div>
+  </div>
+</footer>
+
+<script src="app.js"></script>
 
 </body>
 </html>
