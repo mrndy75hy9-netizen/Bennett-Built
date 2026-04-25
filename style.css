@@ -803,3 +803,11 @@ footer {
     white-space: nowrap;
   }
 }
+
+.activeTab {
+  background: linear-gradient(180deg, #ffd48d, #c76f22) !important;
+  color: black !important;
+  box-shadow:
+    0 0 12px rgba(255,145,55,0.6),
+    inset 0 1px 0 rgba(255,255,255,0.4);
+}
