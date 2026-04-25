@@ -973,3 +973,19 @@ footer {
     radial-gradient(circle at 20% 0%, rgba(111,154,184,.18), transparent 24%),
     linear-gradient(180deg, #071019, #010306);
 }
+
+.resultCard {
+  border-left: 6px solid var(--steel);
+}
+
+.resultCard[data-status="Urgent"] {
+  border-left-color: #ff5f5f;
+}
+
+.resultCard[data-status="Waiting on Parts"] {
+  border-left-color: #e6c15a;
+}
+
+.resultCard[data-status="Ready for Pickup"] {
+  border-left-color: #5fd38d;
+}
