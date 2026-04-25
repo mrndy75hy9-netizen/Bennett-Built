@@ -1,287 +1,78 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <title>Bennett Built Automotive & Fab</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css">
-</head>
+.brandWrap {
+  width: min(1100px, 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 22px;
+  padding: 28px;
+  border: 1px solid var(--border);
+  border-radius: 30px;
+  background:
+    linear-gradient(135deg, rgba(10, 18, 27, 0.84), rgba(30, 50, 66, 0.65));
+  box-shadow: 0 16px 38px rgba(0,0,0,0.48);
+  backdrop-filter: blur(8px);
+  text-align: center;
+}
 
-<body>
+.logoFrame,
+.wideLogoFrame {
+  width: min(850px, 96vw);
+  min-height: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+  border-radius: 28px;
+  overflow: visible;
+  background:
+    radial-gradient(circle at center, rgba(111,154,184,0.18), rgba(5,9,14,0.85));
+  border: 1px solid rgba(159,196,220,0.35);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.08),
+    0 18px 34px rgba(0,0,0,0.55);
+}
 
-<header class="siteHero">
-  <div class="heroOverlay">
-    <div class="brandWrap">
-      <img src="F0B8591E-F6AB-4C12-8A27-4932BF2D1E67.png" class="mainLogo" alt="Bennett Built Automotive & Fab Logo">
+.mainLogo,
+.wideLogo {
+  display: block;
+  width: 100%;
+  max-width: 820px;
+  height: auto;
+  object-fit: contain;
+  object-position: center;
+}
 
-      <div class="brandText">
-        <p class="eyebrow">Automotive • Fabrication • Repair</p>
-        <h1>Bennett Built Automotive & Fab</h1>
-        <p class="tagline">Yeah... we can fix that</p>
-        <div class="heroButtons">
-          <button onclick="showTab('intake')">Start Intake</button>
-          <button onclick="showTab('estimates')">Request Estimate</button>
-          <button onclick="showTab('loginArea')" class="ghostBtn">Employee Login</button>
-        </div>
-      </div>
-    </div>
-  </div>
-</header>
+.brandText {
+  max-width: 900px;
+}
 
-<nav class="mainTabs">
-  <button onclick="showTab('home')">Home</button>
-  <button onclick="showTab('services')">Services</button>
-  <button onclick="showTab('intake')">Intake</button>
-  <button onclick="showTab('appointments')">Appointments</button>
-  <button onclick="showTab('estimates')">Estimates</button>
-  <button onclick="showTab('loginArea')">Employee</button>
-</nav>
+.brandText .eyebrow,
+.eyebrow {
+  color: var(--steel2);
+  text-transform: uppercase;
+  letter-spacing: 1.8px;
+  font-size: 12px;
+  font-weight: bold;
+}
 
-<main>
+.brandText h1 {
+  margin: 6px 0;
+  font-size: clamp(28px, 5vw, 52px);
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
 
-<section id="home" class="tabPage">
-  <div class="featureHero shopPanel">
-    <div>
-      <p class="eyebrow">Mom-and-pop shop. Real-world fixes.</p>
-      <h2>Built for the weird jobs, the daily drivers, and the “can you look at this?” problems.</h2>
-      <p>
-        Bennett Built handles automotive repair, diagnostics, fabrication, hydraulics,
-        pneumatics, motors, equipment, custom work, and the oddball fixes that do not fit neatly into a service menu.
-      </p>
-    </div>
-  </div>
+.tagline {
+  color: var(--silver);
+  font-size: 24px;
+  font-style: italic;
+  margin: 8px 0 18px;
+}
 
-  <div class="quickGrid">
-    <div class="miniCard">
-      <span>01</span>
-      <h3>Tell us what’s going on</h3>
-      <p>Use the intake form to send customer and vehicle details.</p>
-    </div>
-
-    <div class="miniCard">
-      <span>02</span>
-      <h3>Request service</h3>
-      <p>Send an appointment or estimate request without playing phone tag.</p>
-    </div>
-
-    <div class="miniCard">
-      <span>03</span>
-      <h3>We track it</h3>
-      <p>Jobs, vehicles, parts, tasks, notes, and status all live in the shop dashboard.</p>
-    </div>
-  </div>
-</section>
-
-<section id="services" class="tabPage hidden">
-  <div class="pageBanner servicesBanner">
-    <h2>Services & Repairs</h2>
-    <p>Diagnostics, repairs, fabrication, and “yeah... we can fix that” work.</p>
-  </div>
-
-  <div class="serviceGrid">
-    <div class="serviceCard">
-      <h3>Diagnostics</h3>
-      <p>Check engine lights, no-starts, drivability issues, electrical problems, scan data, and troubleshooting.</p>
-      <span>Starting point: inspection required</span>
-    </div>
-
-    <div class="serviceCard">
-      <h3>Mechanical Repair</h3>
-      <p>Brakes, suspension, engine work, cooling systems, maintenance, and general repair.</p>
-      <span>Parts + labor quoted per job</span>
-    </div>
-
-    <div class="serviceCard">
-      <h3>Fabrication & Welding</h3>
-      <p>Custom brackets, repair fabrication, metal work, trailer/utility repair, and shop-built solutions.</p>
-      <span>Custom quote required</span>
-    </div>
-
-    <div class="serviceCard">
-      <h3>Hydraulics / Pneumatics</h3>
-      <p>Lines, fittings, motors, equipment, troubleshooting, and repair support.</p>
-      <span>Inspection recommended</span>
-    </div>
-  </div>
-
-  <div class="disclaimerCard">
-    <h3>Estimate note</h3>
-    <p>
-      Online requests are not final quotes. Final pricing depends on inspection, parts availability,
-      labor time, hidden damage, and what the vehicle or equipment actually does once we get into it.
-    </p>
-  </div>
-</section>
-
-<section id="intake" class="tabPage hidden">
-  <div class="pageBanner intakeBanner">
-    <h2>Customer Intake</h2>
-    <p>Start here so we have the customer, vehicle, and problem details in one place.</p>
-  </div>
-
-  <div class="formCard">
-    <input id="custName" placeholder="Customer Name">
-    <input id="custPhone" placeholder="Phone">
-    <input id="custEmail" placeholder="Email">
-    <input id="vehicleInfo" placeholder="Vehicle: Year Make Model">
-    <input id="vin" placeholder="VIN optional">
-    <textarea id="issue" placeholder="What needs fixed? Include symptoms, noises, leaks, codes, or what happened before it started."></textarea>
-    <button onclick="saveCustomer()">Submit Customer Intake</button>
-  </div>
-</section>
-
-<section id="appointments" class="tabPage hidden">
-  <div class="pageBanner appointmentBanner">
-    <h2>Appointments</h2>
-    <p>Request a time. We’ll confirm before anything is officially scheduled.</p>
-  </div>
-
-  <div class="formCard">
-    <input id="apptName" placeholder="Name">
-    <input id="apptPhone" placeholder="Phone">
-    <input id="apptVehicle" placeholder="Vehicle">
-    <input id="apptDate" type="date">
-    <input id="apptTime" type="time">
-    <textarea id="apptService" placeholder="Requested service"></textarea>
-    <button onclick="saveAppointment()">Request Appointment</button>
-  </div>
-</section>
-
-<section id="estimates" class="tabPage hidden">
-  <div class="pageBanner estimateBanner">
-    <h2>Estimate Request</h2>
-    <p>Tell us what you need quoted. Photos/doc upload can be added next.</p>
-  </div>
-
-  <div class="formCard">
-    <input id="estName" placeholder="Name">
-    <input id="estPhone" placeholder="Phone">
-    <input id="estVehicle" placeholder="Vehicle">
-    <textarea id="estDetails" placeholder="Describe the job, issue, or fabrication request"></textarea>
-    <button onclick="saveEstimate()">Request Estimate</button>
-  </div>
-</section>
-
-<section id="loginArea" class="tabPage hidden">
-  <div class="pageBanner employeeBanner">
-    <h2>Employee Access</h2>
-    <p>Private shop dashboard for customers, jobs, tasks, notes, parts, and records.</p>
-  </div>
-
-  <div class="formCard">
-    <input id="loginEmail" placeholder="Email">
-    <input id="loginPassword" type="password" placeholder="Password">
-    <button onclick="login()">Login</button>
-    <button onclick="logout()" class="ghostBtn">Logout</button>
-    <p id="loginStatus" class="loginStatus">Not logged in</p>
-  </div>
-</section>
-
-<section id="dashboard" class="hidden dashboardShell">
-  <nav class="dashTabs">
-    <button onclick="showDash('dashOverview')">Overview</button>
-    <button onclick="showDash('dashJobs')">Jobs</button>
-    <button onclick="showDash('dashTasks')">Tasks</button>
-    <button onclick="showDash('dashNotes')">Notes</button>
-    <button onclick="showDash('dashRecords')">Records</button>
-  </nav>
-
-  <section id="dashOverview" class="dashPage">
-    <div class="dashboardHeader">
-      <h2>Shop Dashboard</h2>
-      <p>Internal tracker for jobs, vehicles, parts, tasks, notes, and follow-ups.</p>
-    </div>
-
-    <div class="stats">
-      <div><strong id="activeCount">0</strong><span>Active Jobs</span></div>
-      <div><strong id="partsCount">0</strong><span>Waiting Parts</span></div>
-      <div><strong id="readyCount">0</strong><span>Ready</span></div>
-    </div>
-
-    <div class="dashActions">
-      <button onclick="loadCustomers()">Load Customers</button>
-      <button onclick="loadJobs()">Load Jobs</button>
-      <button onclick="loadTasks()">Load Tasks</button>
-    </div>
-  </section>
-
-  <section id="dashJobs" class="dashPage hidden">
-    <div class="formCard">
-      <h3>Add Job / Service Log</h3>
-      <input id="jobCustomer" placeholder="Customer">
-      <input id="jobVehicle" placeholder="Vehicle">
-      <input id="assignedTo" placeholder="Assigned To">
-
-      <select id="jobStatus">
-        <option>New</option>
-        <option>Scheduled</option>
-        <option>Diagnosing</option>
-        <option>Waiting on Parts</option>
-        <option>In Progress</option>
-        <option>Ready for Pickup</option>
-        <option>Completed</option>
-        <option>Paid</option>
-      </select>
-
-      <select id="priority">
-        <option>Normal</option>
-        <option>Urgent</option>
-        <option>Low</option>
-      </select>
-
-      <textarea id="partsNeeded" placeholder="Parts needed"></textarea>
-      <textarea id="laborNotes" placeholder="Labor notes"></textarea>
-      <textarea id="internalJobNotes" placeholder="Internal notes"></textarea>
-      <input id="paymentStatus" placeholder="Payment Status">
-      <input id="paperwork" placeholder="Paperwork Checklist">
-      <input id="followUpDate" type="date">
-
-      <button onclick="saveServiceLog()">Save Job</button>
-      <button onclick="loadJobs()" class="ghostBtn">Load Jobs</button>
-    </div>
-  </section>
-
-  <section id="dashTasks" class="dashPage hidden">
-    <div class="formCard">
-      <h3>Employee Task</h3>
-      <input id="taskTitle" placeholder="Task">
-      <input id="taskAssigned" placeholder="Assigned To">
-      <input id="taskDue" type="date">
-      <button onclick="saveTask()">Save Task</button>
-      <button onclick="loadTasks()" class="ghostBtn">Load Tasks</button>
-    </div>
-  </section>
-
-  <section id="dashNotes" class="dashPage hidden">
-    <div class="formCard">
-      <h3>Internal Notes</h3>
-      <textarea id="internalNote" placeholder="Private shop note"></textarea>
-      <button onclick="saveInternalNote()">Save Note</button>
-      <button onclick="loadInternalNotes()" class="ghostBtn">Load Notes</button>
-    </div>
-  </section>
-
-  <section id="dashRecords" class="dashPage hidden">
-    <div class="recordButtons">
-      <button onclick="loadCustomers()">Customers</button>
-      <button onclick="loadVehicles()">Vehicles</button>
-      <button onclick="loadAppointments()">Appointments</button>
-      <button onclick="loadEstimates()">Estimates</button>
-      <button onclick="loadJobs()">Jobs</button>
-      <button onclick="loadTasks()">Tasks</button>
-      <button onclick="loadInternalNotes()">Notes</button>
-    </div>
-  </section>
-
-  <div id="results"></div>
-</section>
-
-</main>
-
-<footer>
-  <p>Bennett Built Automotive & Fab</p>
-  <p>Yeah... we can fix that</p>
-</footer>
-
-<script type="module" src="app.js"></script>
-</body>
-</html>
+.heroButtons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
