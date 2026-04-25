@@ -8,6 +8,8 @@
 
 <body>
 
+<!-- ================= HERO ================= -->
+
 <header class="siteHero">
   <div class="heroOverlay">
     <div class="brandWrap">
@@ -35,10 +37,13 @@
   </div>
 </header>
 
+<!-- ================= NAV ================= -->
+
 <nav class="mainTabs">
   <button onclick="showTab('home')">Home</button>
   <button onclick="showTab('meet')">Meet</button>
   <button onclick="showTab('services')">Work</button>
+  <button onclick="showTab('reviews')">Reviews</button>
   <button onclick="showTab('intake')">Forms</button>
   <button onclick="showTab('appointments')">Appointments</button>
   <button onclick="showTab('estimates')">Estimates</button>
@@ -47,7 +52,8 @@
 
 <main>
 
-<!-- HOME -->
+<!-- ================= HOME ================= -->
+
 <section id="home" class="tabPage">
   <div class="featureHero">
     <div>
@@ -60,7 +66,8 @@
   </div>
 </section>
 
-<!-- MEET -->
+<!-- ================= MEET ================= -->
+
 <section id="meet" class="tabPage hidden">
   <div class="pageBanner">
     <div>
@@ -84,17 +91,18 @@
     <div class="storyCard">
       <h3>Nancy Bennett</h3>
       <p>
-        Keeps everything from turning into a pile of lost notes and chaos.
+        Keeps everything from turning into chaos.
       </p>
       <p>
-        Makes sure nothing gets missed, forgotten, or buried.
+        Makes sure nothing gets lost, forgotten, or buried.
       </p>
     </div>
 
   </div>
 </section>
 
-<!-- SERVICES -->
+<!-- ================= SERVICES ================= -->
+
 <section id="services" class="tabPage hidden">
   <div class="pageBanner">
     <div>
@@ -113,12 +121,29 @@
   </div>
 </section>
 
-<!-- INTAKE -->
+<!-- ================= REVIEWS ================= -->
+
+<section id="reviews" class="tabPage hidden">
+  <div class="pageBanner">
+    <div>
+      <h2>What people say</h2>
+      <p>Real work, real feedback.</p>
+    </div>
+  </div>
+
+  <div class="reviewsGrid">
+    <div class="reviewCard">“They actually explained it.”</div>
+    <div class="reviewCard">“Fixed something nobody else would touch.”</div>
+    <div class="reviewCard">“No runaround.”</div>
+  </div>
+</section>
+
+<!-- ================= INTAKE ================= -->
+
 <section id="intake" class="tabPage hidden">
   <div class="pageBanner">
     <div>
       <h2>Tell us what’s going on</h2>
-      <p>Send details + photos so we know where to start.</p>
     </div>
   </div>
 
@@ -126,7 +151,6 @@
     <input id="custName" placeholder="Name">
     <input id="custPhone" placeholder="Phone">
     <input id="vehicleInfo" placeholder="Vehicle / equipment">
-
     <textarea id="issue" placeholder="What’s it doing?"></textarea>
 
     <label>Upload photos</label>
@@ -136,7 +160,8 @@
   </div>
 </section>
 
-<!-- APPOINTMENTS -->
+<!-- ================= APPOINTMENTS ================= -->
+
 <section id="appointments" class="tabPage hidden">
   <div class="pageBanner">
     <div>
@@ -158,7 +183,8 @@
   </div>
 </section>
 
-<!-- ESTIMATES -->
+<!-- ================= ESTIMATES ================= -->
+
 <section id="estimates" class="tabPage hidden">
   <div class="pageBanner">
     <div>
@@ -170,16 +196,15 @@
   <div class="formCard">
     <input id="estName" placeholder="Name">
     <input id="estPhone" placeholder="Phone">
-
     <textarea id="estDetails" placeholder="What’s going on?"></textarea>
-
     <input id="estFiles" type="file" multiple>
 
     <button onclick="saveEstimate()">Send</button>
   </div>
 </section>
 
-<!-- EMPLOYEE -->
+<!-- ================= EMPLOYEE ================= -->
+
 <section id="loginArea" class="tabPage hidden">
   <div class="formCard">
     <h3>Employee Login</h3>
@@ -189,8 +214,69 @@
   </div>
 </section>
 
+<!-- ================= DASHBOARD ================= -->
+
+<section id="dashboard" class="hidden dashboardShell">
+
+  <nav class="dashTabs">
+    <button onclick="showDash('dashOverview')">Overview</button>
+    <button onclick="showDash('dashJobs')">Jobs</button>
+    <button onclick="showDash('dashTasks')">Tasks</button>
+    <button onclick="showDash('dashNotes')">Notes</button>
+  </nav>
+
+  <section id="dashOverview" class="dashPage">
+    <div class="dashboardHeader">
+      <h2>Shop Dashboard</h2>
+      <p>Everything in one place so nothing gets lost.</p>
+    </div>
+
+    <div class="stats">
+      <div><strong id="activeCount">0</strong><span>Active</span></div>
+      <div><strong id="partsCount">0</strong><span>Waiting</span></div>
+      <div><strong id="readyCount">0</strong><span>Ready</span></div>
+    </div>
+
+    <div class="dashActions">
+      <button onclick="loadCustomers()">Customers</button>
+      <button onclick="loadJobs()">Jobs</button>
+      <button onclick="loadTasks()">Tasks</button>
+    </div>
+  </section>
+
+  <section id="dashJobs" class="dashPage hidden">
+    <div class="formCard">
+      <h3>Add Job</h3>
+      <input id="jobCustomer" placeholder="Customer">
+      <input id="jobVehicle" placeholder="Vehicle / project">
+      <textarea id="laborNotes" placeholder="Notes"></textarea>
+      <button onclick="saveServiceLog()">Save</button>
+    </div>
+  </section>
+
+  <section id="dashTasks" class="dashPage hidden">
+    <div class="formCard">
+      <h3>Task</h3>
+      <input id="taskTitle" placeholder="Task">
+      <button onclick="saveTask()">Save</button>
+    </div>
+  </section>
+
+  <section id="dashNotes" class="dashPage hidden">
+    <div class="formCard">
+      <h3>Note</h3>
+      <textarea id="internalNote"></textarea>
+      <button onclick="saveInternalNote()">Save</button>
+    </div>
+  </section>
+
+  <div id="results"></div>
+
+</section>
+
 </main>
 
-<script src="app.js"></script>
+<script type="module" src="app.js"></script>
+
 </body>
 </html>
