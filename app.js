@@ -14,6 +14,13 @@ import {
   onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-auth.js";
 
+import {
+  getStorage,
+  ref,
+  uploadBytes,
+  getDownloadURL
+} from "https://www.gstatic.com/firebasejs/12.12.1/firebase-storage.js";
+
 const firebaseConfig = {
   apiKey: "AIzaSyDDPTMi__XAv8kDURyTaMTv2wpwzwmwhP0",
   authDomain: "bennett-built-automotive.firebaseapp.com",
@@ -26,6 +33,11 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const auth = getAuth(app);
+const storage = getStorage(app);
+
+/* =========================
+   HELPERS
+========================= */
 
 function value(id) {
   return document.getElementById(id)?.value || "";
@@ -36,14 +48,20 @@ function clearValue(id) {
   if (field) field.value = "";
 }
 
+function clearFiles(id) {
+  const field = document.getElementById(id);
+  if (field) field.value = "";
+}
+
 function setResults(html) {
   const results = document.getElementById("results");
   if (results) results.innerHTML = html;
 }
 
-function card(html, status = "") {
-  const statusClass = getStatusClass(status);
-  return `<div class="resultCard ${statusClass}">${html}</div>`;
+function safeFileName(name) {
+  return name
+    .replace(/\s+/g, "-")
+    .replace(/[^a-zA-Z0-9._-]/g, "");
 }
 
 function getStatusClass(status) {
@@ -57,8 +75,51 @@ function getStatusClass(status) {
   return "";
 }
 
+function card(html, status = "") {
+  const statusClass = getStatusClass(status);
+  return `<div class="resultCard ${statusClass}">${html}</div>`;
+}
+
+function renderFileLinks(files = []) {
+  if (!files.length) return "";
+
+  let html = `<br><strong>Uploads:</strong><br>`;
+
+  files.forEach((file, index) => {
+    html += `<a href="${file.url}" target="_blank">File ${index + 1}: ${file.name}</a><br>`;
+  });
+
+  return html;
+}
+
+async function uploadFiles(inputId, folderName) {
+  const input = document.getElementById(inputId);
+  if (!input || !input.files || input.files.length === 0) return [];
+
+  const uploaded = [];
+
+  for (const file of input.files) {
+    const cleanName = safeFileName(file.name);
+    const path = `${folderName}/${Date.now()}-${cleanName}`;
+    const storageRef = ref(storage, path);
+
+    await uploadBytes(storageRef, file);
+    const url = await getDownloadURL(storageRef);
+
+    uploaded.push({
+      name: file.name,
+      path,
+      url,
+      type: file.type || "unknown",
+      size: file.size || 0
+    });
+  }
+
+  return uploaded;
+}
+
 /* =========================
-   PAGE NAVIGATION
+   NAVIGATION
 ========================= */
 
 window.showTab = function (tabId) {
@@ -88,95 +149,136 @@ window.showDash = function (tabId) {
 ========================= */
 
 window.saveCustomer = async function () {
-  const data = {
-    name: value("custName"),
-    phone: value("custPhone"),
-    email: value("custEmail"),
-    vehicle: value("vehicleInfo"),
-    vin: value("vin"),
-    issue: value("issue"),
-    status: "New",
-    priority: "Normal",
-    createdAt: new Date()
-  };
+  const name = value("custName");
+  const phone = value("custPhone");
 
-  if (!data.name || !data.phone) {
+  if (!name || !phone) {
     alert("Please enter customer name and phone.");
     return;
   }
 
-  await addDoc(collection(db, "customers"), data);
+  try {
+    alert("Saving customer and uploading files...");
 
-  await addDoc(collection(db, "vehicles"), {
-    customerName: data.name,
-    phone: data.phone,
-    vehicle: data.vehicle,
-    vin: data.vin,
-    createdAt: new Date()
-  });
+    const files = await uploadFiles("custFiles", "publicUploads/customer-intake");
 
-  clearValue("custName");
-  clearValue("custPhone");
-  clearValue("custEmail");
-  clearValue("vehicleInfo");
-  clearValue("vin");
-  clearValue("issue");
+    const data = {
+      name,
+      phone,
+      email: value("custEmail"),
+      vehicle: value("vehicleInfo"),
+      vin: value("vin"),
+      issue: value("issue"),
+      files,
+      status: "New",
+      priority: "Normal",
+      createdAt: new Date()
+    };
 
-  alert("Customer intake saved!");
+    await addDoc(collection(db, "customers"), data);
+
+    await addDoc(collection(db, "vehicles"), {
+      customerName: data.name,
+      phone: data.phone,
+      vehicle: data.vehicle,
+      vin: data.vin,
+      files,
+      createdAt: new Date()
+    });
+
+    clearValue("custName");
+    clearValue("custPhone");
+    clearValue("custEmail");
+    clearValue("vehicleInfo");
+    clearValue("vin");
+    clearValue("issue");
+    clearFiles("custFiles");
+
+    alert("Customer intake saved!");
+  } catch (error) {
+    console.error(error);
+    alert("Error saving customer: " + error.message);
+  }
 };
 
 window.saveAppointment = async function () {
-  const data = {
-    name: value("apptName"),
-    phone: value("apptPhone"),
-    vehicle: value("apptVehicle"),
-    date: value("apptDate"),
-    time: value("apptTime"),
-    service: value("apptService"),
-    status: "Requested",
-    createdAt: new Date()
-  };
+  const name = value("apptName");
+  const phone = value("apptPhone");
+  const date = value("apptDate");
 
-  if (!data.name || !data.phone || !data.date) {
+  if (!name || !phone || !date) {
     alert("Please enter name, phone, and requested date.");
     return;
   }
 
-  await addDoc(collection(db, "appointments"), data);
+  try {
+    alert("Saving appointment and uploading files...");
 
-  clearValue("apptName");
-  clearValue("apptPhone");
-  clearValue("apptVehicle");
-  clearValue("apptDate");
-  clearValue("apptTime");
-  clearValue("apptService");
+    const files = await uploadFiles("apptFiles", "publicUploads/appointments");
 
-  alert("Appointment request saved!");
+    await addDoc(collection(db, "appointments"), {
+      name,
+      phone,
+      vehicle: value("apptVehicle"),
+      date,
+      time: value("apptTime"),
+      service: value("apptService"),
+      files,
+      status: "Requested",
+      createdAt: new Date()
+    });
+
+    clearValue("apptName");
+    clearValue("apptPhone");
+    clearValue("apptVehicle");
+    clearValue("apptDate");
+    clearValue("apptTime");
+    clearValue("apptService");
+    clearFiles("apptFiles");
+
+    alert("Appointment request saved!");
+  } catch (error) {
+    console.error(error);
+    alert("Error saving appointment: " + error.message);
+  }
 };
 
 window.saveEstimate = async function () {
-  const data = {
-    name: value("estName"),
-    phone: value("estPhone"),
-    vehicle: value("estVehicle"),
-    details: value("estDetails"),
-    status: "New Estimate",
-    createdAt: new Date()
-  };
+  const name = value("estName");
+  const phone = value("estPhone");
+  const details = value("estDetails");
 
-  if (!data.name || !data.phone || !data.details) {
+  if (!name || !phone || !details) {
     alert("Please enter name, phone, and job details.");
     return;
   }
 
-  await addDoc(collection(db, "estimates"), data);
+  try {
+    alert("Saving estimate and uploading files...");
 
-  clearValue("estName");
-  clearValue("estPhone");
-  clearValue("estVehicle");
-  clearValue("estDetails");
+    const files = await uploadFiles("estFiles", "publicUploads/estimates");
 
-  alert("Estimate request saved!");
+    await addDoc(collection(db, "estimates"), {
+      name,
+      phone,
+      vehicle: value("estVehicle"),
+      details,
+      files,
+      status: "New Estimate",
+      createdAt: new Date()
+    });
+
+    clearValue("estName");
+    clearValue("estPhone");
+    clearValue("estVehicle");
+    clearValue("estDetails");
+    clearFiles("estFiles");
+
+    alert("Estimate request saved!");
+  } catch (error) {
+    console.error(error);
+    alert("Error saving estimate: " + error.message);
+  }
 };
 
 /* =========================
@@ -221,86 +323,108 @@ onAuthStateChanged(auth, (user) => {
 ========================= */
 
 window.saveServiceLog = async function () {
-  const data = {
-    customer: value("jobCustomer"),
-    vehicle: value("jobVehicle"),
-    assignedTo: value("assignedTo"),
-    status: value("jobStatus"),
-    priority: value("priority"),
-    partsNeeded: value("partsNeeded"),
-    laborNotes: value("laborNotes"),
-    internalNotes: value("internalJobNotes"),
-    paymentStatus: value("paymentStatus"),
-    paperwork: value("paperwork"),
-    followUpDate: value("followUpDate"),
-    createdAt: new Date(),
-    lastUpdated: new Date()
-  };
+  const customer = value("jobCustomer");
+  const vehicle = value("jobVehicle");
 
-  if (!data.customer || !data.vehicle) {
+  if (!customer || !vehicle) {
     alert("Enter customer and vehicle.");
     return;
   }
 
-  await addDoc(collection(db, "serviceLogs"), data);
+  try {
+    alert("Saving job and uploading files...");
 
-  clearValue("jobCustomer");
-  clearValue("jobVehicle");
-  clearValue("assignedTo");
-  clearValue("partsNeeded");
-  clearValue("laborNotes");
-  clearValue("internalJobNotes");
-  clearValue("paymentStatus");
-  clearValue("paperwork");
-  clearValue("followUpDate");
+    const files = await uploadFiles("jobFiles", "shopFiles/job-logs");
 
-  alert("Job log saved!");
-  updateCounts();
+    await addDoc(collection(db, "serviceLogs"), {
+      customer,
+      vehicle,
+      assignedTo: value("assignedTo"),
+      status: value("jobStatus"),
+      priority: value("priority"),
+      partsNeeded: value("partsNeeded"),
+      laborNotes: value("laborNotes"),
+      internalNotes: value("internalJobNotes"),
+      paymentStatus: value("paymentStatus"),
+      paperwork: value("paperwork"),
+      followUpDate: value("followUpDate"),
+      files,
+      createdAt: new Date(),
+      lastUpdated: new Date()
+    });
+
+    clearValue("jobCustomer");
+    clearValue("jobVehicle");
+    clearValue("assignedTo");
+    clearValue("partsNeeded");
+    clearValue("laborNotes");
+    clearValue("internalJobNotes");
+    clearValue("paymentStatus");
+    clearValue("paperwork");
+    clearValue("followUpDate");
+    clearFiles("jobFiles");
+
+    alert("Job log saved!");
+    updateCounts();
+  } catch (error) {
+    console.error(error);
+    alert("Error saving job: " + error.message);
+  }
 };
 
 window.saveTask = async function () {
-  const data = {
-    title: value("taskTitle"),
-    assignedTo: value("taskAssigned"),
-    dueDate: value("taskDue"),
-    status: "Open",
-    createdAt: new Date()
-  };
+  const title = value("taskTitle");
 
-  if (!data.title) {
+  if (!title) {
     alert("Enter a task.");
     return;
   }
 
-  await addDoc(collection(db, "employeeTasks"), data);
+  try {
+    await addDoc(collection(db, "employeeTasks"), {
+      title,
+      assignedTo: value("taskAssigned"),
+      dueDate: value("taskDue"),
+      status: "Open",
+      createdAt: new Date()
+    });
 
-  clearValue("taskTitle");
-  clearValue("taskAssigned");
-  clearValue("taskDue");
+    clearValue("taskTitle");
+    clearValue("taskAssigned");
+    clearValue("taskDue");
 
-  alert("Task saved!");
+    alert("Task saved!");
+  } catch (error) {
+    console.error(error);
+    alert("Error saving task: " + error.message);
+  }
 };
 
 window.saveInternalNote = async function () {
-  const data = {
-    note: value("internalNote"),
-    createdAt: new Date()
-  };
+  const note = value("internalNote");
 
-  if (!data.note) {
+  if (!note) {
     alert("Enter a note.");
     return;
   }
 
-  await addDoc(collection(db, "internalNotes"), data);
+  try {
+    await addDoc(collection(db, "internalNotes"), {
+      note,
+      createdAt: new Date()
+    });
 
-  clearValue("internalNote");
+    clearValue("internalNote");
 
-  alert("Internal note saved!");
+    alert("Internal note saved!");
+  } catch (error) {
+    console.error(error);
+    alert("Error saving note: " + error.message);
+  }
 };
 
 /* =========================
-   DASHBOARD LOADERS
+   LOADERS
 ========================= */
 
 window.loadCustomers = async function () {
@@ -321,6 +445,7 @@ window.loadCustomers = async function () {
       Issue: ${c.issue || ""}<br>
       <span class="badge">${c.status || "New"}</span>
       <span class="badge">${c.priority || "Normal"}</span>
+      ${renderFileLinks(c.files)}
     `, c.status);
   });
 
@@ -340,6 +465,7 @@ window.loadVehicles = async function () {
       <a href="tel:${v.phone || ""}">Call</a> |
       <a href="sms:${v.phone || ""}">Text</a><br>
       VIN: ${v.vin || ""}
+      ${renderFileLinks(v.files)}
     `);
   });
 
@@ -362,6 +488,7 @@ window.loadAppointments = async function () {
       Time: ${a.time || ""}<br>
       Service: ${a.service || ""}<br>
       <span class="badge">${a.status || ""}</span>
+      ${renderFileLinks(a.files)}
     `, a.status);
   });
 
@@ -382,6 +509,7 @@ window.loadEstimates = async function () {
       Vehicle: ${e.vehicle || ""}<br>
       Details: ${e.details || ""}<br>
       <span class="badge">${e.status || ""}</span>
+      ${renderFileLinks(e.files)}
     `, e.status);
   });
 
@@ -407,6 +535,7 @@ window.loadJobs = async function () {
       Follow-up: ${j.followUpDate || ""}<br>
       <span class="badge">${j.status || ""}</span>
       <span class="badge">${j.priority || ""}</span>
+      ${renderFileLinks(j.files)}
     `, j.status || j.priority);
   });
 
