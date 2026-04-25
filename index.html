@@ -11,23 +11,48 @@
 <header class="hero">
   <div class="brand">
     <img src="logo.png" class="logo">
-    <div class="brandText">
+    <div>
       <h1>Bennett Built Automotive & Fab</h1>
       <p>Yeah... we can fix that</p>
     </div>
   </div>
 </header>
 
+<!-- CUSTOMER -->
 <section class="card">
   <h2>Customer Intake</h2>
   <input id="custName" placeholder="Customer Name">
   <input id="custPhone" placeholder="Phone">
   <input id="custEmail" placeholder="Email">
   <input id="vehicleInfo" placeholder="Vehicle">
+  <input id="vin" placeholder="VIN">
   <textarea id="issue" placeholder="What needs fixed?"></textarea>
   <button onclick="saveCustomer()">Submit</button>
 </section>
 
+<!-- APPOINTMENT -->
+<section class="card">
+  <h2>Appointment</h2>
+  <input id="apptName" placeholder="Name">
+  <input id="apptPhone" placeholder="Phone">
+  <input id="apptVehicle" placeholder="Vehicle">
+  <input id="apptDate" type="date">
+  <input id="apptTime" type="time">
+  <textarea id="apptService" placeholder="Service"></textarea>
+  <button onclick="saveAppointment()">Submit</button>
+</section>
+
+<!-- ESTIMATE -->
+<section class="card">
+  <h2>Estimate</h2>
+  <input id="estName" placeholder="Name">
+  <input id="estPhone" placeholder="Phone">
+  <input id="estVehicle" placeholder="Vehicle">
+  <textarea id="estDetails" placeholder="Details"></textarea>
+  <button onclick="saveEstimate()">Submit</button>
+</section>
+
+<!-- LOGIN -->
 <section class="card">
   <h2>Employee Login</h2>
   <input id="loginEmail" placeholder="Email">
@@ -37,22 +62,77 @@
   <p id="loginStatus">Not logged in</p>
 </section>
 
+<!-- DASHBOARD -->
 <section id="dashboard" class="hidden">
+
   <h2>Dashboard</h2>
 
-  <input id="jobCustomer" placeholder="Customer">
-  <input id="jobVehicle" placeholder="Vehicle">
-  <input id="assignedTo" placeholder="Assigned to">
-  <textarea id="laborNotes" placeholder="Notes"></textarea>
+  <!-- STATS -->
+  <div class="stats">
+    <div><strong id="activeCount">0</strong>Active</div>
+    <div><strong id="partsCount">0</strong>Parts</div>
+    <div><strong id="readyCount">0</strong>Ready</div>
+  </div>
 
-  <button onclick="saveServiceLog()">Save Job</button>
+  <!-- JOB LOG -->
+  <div class="card">
+    <h3>Add Job</h3>
+    <input id="jobCustomer" placeholder="Customer">
+    <input id="jobVehicle" placeholder="Vehicle">
+    <input id="assignedTo" placeholder="Assigned To">
 
-  <br><br>
+    <select id="jobStatus">
+      <option>New</option>
+      <option>Scheduled</option>
+      <option>Diagnosing</option>
+      <option>Waiting on Parts</option>
+      <option>In Progress</option>
+      <option>Ready for Pickup</option>
+      <option>Completed</option>
+      <option>Paid</option>
+    </select>
 
-  <button onclick="loadCustomers()">Customers</button>
-  <button onclick="loadJobs()">Jobs</button>
+    <input id="priority" placeholder="Priority">
+    <textarea id="partsNeeded" placeholder="Parts Needed"></textarea>
+    <textarea id="laborNotes" placeholder="Labor Notes"></textarea>
+    <textarea id="internalJobNotes" placeholder="Internal Notes"></textarea>
+
+    <input id="paymentStatus" placeholder="Payment Status">
+    <input id="paperwork" placeholder="Paperwork">
+    <input id="followUpDate" type="date">
+
+    <button onclick="saveServiceLog()">Save Job</button>
+  </div>
+
+  <!-- TASKS -->
+  <div class="card">
+    <h3>Employee Task</h3>
+    <input id="taskTitle" placeholder="Task">
+    <input id="taskAssigned" placeholder="Assigned To">
+    <input id="taskDue" type="date">
+    <button onclick="saveTask()">Save Task</button>
+  </div>
+
+  <!-- NOTES -->
+  <div class="card">
+    <h3>Internal Notes</h3>
+    <textarea id="internalNote"></textarea>
+    <button onclick="saveInternalNote()">Save Note</button>
+  </div>
+
+  <!-- LOAD BUTTONS -->
+  <div class="card">
+    <button onclick="loadCustomers()">Customers</button>
+    <button onclick="loadVehicles()">Vehicles</button>
+    <button onclick="loadAppointments()">Appointments</button>
+    <button onclick="loadEstimates()">Estimates</button>
+    <button onclick="loadJobs()">Jobs</button>
+    <button onclick="loadTasks()">Tasks</button>
+    <button onclick="loadInternalNotes()">Notes</button>
+  </div>
 
   <div id="results"></div>
+
 </section>
 
 <script type="module" src="app.js"></script>
