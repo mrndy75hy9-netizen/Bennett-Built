@@ -18,124 +18,168 @@
   </div>
 </header>
 
-<!-- CUSTOMER -->
-<section class="card">
-  <h2>Customer Intake</h2>
-  <input id="custName" placeholder="Customer Name">
-  <input id="custPhone" placeholder="Phone">
-  <input id="custEmail" placeholder="Email">
-  <input id="vehicleInfo" placeholder="Vehicle">
-  <input id="vin" placeholder="VIN">
-  <textarea id="issue" placeholder="What needs fixed?"></textarea>
-  <button onclick="saveCustomer()">Submit</button>
+<nav class="tabs">
+  <button onclick="showTab('home')">Home</button>
+  <button onclick="showTab('intake')">Intake</button>
+  <button onclick="showTab('appointments')">Appointments</button>
+  <button onclick="showTab('estimates')">Estimates</button>
+  <button onclick="showTab('loginArea')">Employee</button>
+</nav>
+
+<section id="home" class="tabPage">
+  <div class="card">
+    <h2>Welcome to Bennett Built</h2>
+    <p>Mom-and-pop automotive repair, fabrication, diagnostics, hydraulics, pneumatics, motors, equipment, and oddball fixes.</p>
+  </div>
+
+  <div class="card">
+    <h2>Services</h2>
+    <div class="serviceGrid">
+      <div>Diagnostics</div>
+      <div>Mechanical Repair</div>
+      <div>Fabrication</div>
+      <div>Welding</div>
+      <div>Hydraulics</div>
+      <div>Pneumatics</div>
+      <div>Motors</div>
+      <div>Custom Work</div>
+    </div>
+  </div>
 </section>
 
-<!-- APPOINTMENT -->
-<section class="card">
-  <h2>Appointment</h2>
-  <input id="apptName" placeholder="Name">
-  <input id="apptPhone" placeholder="Phone">
-  <input id="apptVehicle" placeholder="Vehicle">
-  <input id="apptDate" type="date">
-  <input id="apptTime" type="time">
-  <textarea id="apptService" placeholder="Service"></textarea>
-  <button onclick="saveAppointment()">Submit</button>
+<section id="intake" class="tabPage hidden">
+  <div class="card">
+    <h2>Customer Intake</h2>
+    <input id="custName" placeholder="Customer Name">
+    <input id="custPhone" placeholder="Phone">
+    <input id="custEmail" placeholder="Email">
+    <input id="vehicleInfo" placeholder="Vehicle: Year Make Model">
+    <input id="vin" placeholder="VIN optional">
+    <textarea id="issue" placeholder="What needs fixed?"></textarea>
+    <button onclick="saveCustomer()">Submit Customer</button>
+  </div>
 </section>
 
-<!-- ESTIMATE -->
-<section class="card">
-  <h2>Estimate</h2>
-  <input id="estName" placeholder="Name">
-  <input id="estPhone" placeholder="Phone">
-  <input id="estVehicle" placeholder="Vehicle">
-  <textarea id="estDetails" placeholder="Details"></textarea>
-  <button onclick="saveEstimate()">Submit</button>
+<section id="appointments" class="tabPage hidden">
+  <div class="card">
+    <h2>Appointment Request</h2>
+    <input id="apptName" placeholder="Name">
+    <input id="apptPhone" placeholder="Phone">
+    <input id="apptVehicle" placeholder="Vehicle">
+    <input id="apptDate" type="date">
+    <input id="apptTime" type="time">
+    <textarea id="apptService" placeholder="Requested service"></textarea>
+    <button onclick="saveAppointment()">Request Appointment</button>
+  </div>
 </section>
 
-<!-- LOGIN -->
-<section class="card">
-  <h2>Employee Login</h2>
-  <input id="loginEmail" placeholder="Email">
-  <input id="loginPassword" type="password" placeholder="Password">
-  <button onclick="login()">Login</button>
-  <button onclick="logout()">Logout</button>
-  <p id="loginStatus">Not logged in</p>
+<section id="estimates" class="tabPage hidden">
+  <div class="card">
+    <h2>Estimate Request</h2>
+    <input id="estName" placeholder="Name">
+    <input id="estPhone" placeholder="Phone">
+    <input id="estVehicle" placeholder="Vehicle">
+    <textarea id="estDetails" placeholder="Describe the job / issue"></textarea>
+    <button onclick="saveEstimate()">Request Estimate</button>
+  </div>
 </section>
 
-<!-- DASHBOARD -->
+<section id="loginArea" class="tabPage hidden">
+  <div class="card">
+    <h2>Employee Login</h2>
+    <input id="loginEmail" placeholder="Email">
+    <input id="loginPassword" type="password" placeholder="Password">
+    <button onclick="login()">Login</button>
+    <button onclick="logout()">Logout</button>
+    <p id="loginStatus">Not logged in</p>
+  </div>
+</section>
+
 <section id="dashboard" class="hidden">
 
-  <h2>Dashboard</h2>
+  <nav class="tabs dashboardTabs">
+    <button onclick="showDash('dashHome')">Overview</button>
+    <button onclick="showDash('dashJobs')">Jobs</button>
+    <button onclick="showDash('dashTasks')">Tasks</button>
+    <button onclick="showDash('dashNotes')">Notes</button>
+    <button onclick="showDash('dashData')">Records</button>
+  </nav>
 
-  <!-- STATS -->
-  <div class="stats">
-    <div><strong id="activeCount">0</strong>Active</div>
-    <div><strong id="partsCount">0</strong>Parts</div>
-    <div><strong id="readyCount">0</strong>Ready</div>
-  </div>
+  <section id="dashHome" class="dashPage">
+    <div class="stats">
+      <div><strong id="activeCount">0</strong><span>Active Jobs</span></div>
+      <div><strong id="partsCount">0</strong><span>Waiting Parts</span></div>
+      <div><strong id="readyCount">0</strong><span>Ready</span></div>
+    </div>
+  </section>
 
-  <!-- JOB LOG -->
-  <div class="card">
-    <h3>Add Job</h3>
-    <input id="jobCustomer" placeholder="Customer">
-    <input id="jobVehicle" placeholder="Vehicle">
-    <input id="assignedTo" placeholder="Assigned To">
+  <section id="dashJobs" class="dashPage hidden">
+    <div class="card">
+      <h3>Add Job / Service Log</h3>
+      <input id="jobCustomer" placeholder="Customer">
+      <input id="jobVehicle" placeholder="Vehicle">
+      <input id="assignedTo" placeholder="Assigned To">
 
-    <select id="jobStatus">
-      <option>New</option>
-      <option>Scheduled</option>
-      <option>Diagnosing</option>
-      <option>Waiting on Parts</option>
-      <option>In Progress</option>
-      <option>Ready for Pickup</option>
-      <option>Completed</option>
-      <option>Paid</option>
-    </select>
+      <select id="jobStatus">
+        <option>New</option>
+        <option>Scheduled</option>
+        <option>Diagnosing</option>
+        <option>Waiting on Parts</option>
+        <option>In Progress</option>
+        <option>Ready for Pickup</option>
+        <option>Completed</option>
+        <option>Paid</option>
+      </select>
 
-    <input id="priority" placeholder="Priority">
-    <textarea id="partsNeeded" placeholder="Parts Needed"></textarea>
-    <textarea id="laborNotes" placeholder="Labor Notes"></textarea>
-    <textarea id="internalJobNotes" placeholder="Internal Notes"></textarea>
+      <input id="priority" placeholder="Priority: Normal / Urgent">
+      <textarea id="partsNeeded" placeholder="Parts Needed"></textarea>
+      <textarea id="laborNotes" placeholder="Labor Notes"></textarea>
+      <textarea id="internalJobNotes" placeholder="Internal Notes"></textarea>
+      <input id="paymentStatus" placeholder="Payment Status">
+      <input id="paperwork" placeholder="Paperwork Checklist">
+      <input id="followUpDate" type="date">
 
-    <input id="paymentStatus" placeholder="Payment Status">
-    <input id="paperwork" placeholder="Paperwork">
-    <input id="followUpDate" type="date">
+      <button onclick="saveServiceLog()">Save Job</button>
+      <button onclick="loadJobs()">Load Jobs</button>
+    </div>
+  </section>
 
-    <button onclick="saveServiceLog()">Save Job</button>
-  </div>
+  <section id="dashTasks" class="dashPage hidden">
+    <div class="card">
+      <h3>Employee Task</h3>
+      <input id="taskTitle" placeholder="Task">
+      <input id="taskAssigned" placeholder="Assigned To">
+      <input id="taskDue" type="date">
+      <button onclick="saveTask()">Save Task</button>
+      <button onclick="loadTasks()">Load Tasks</button>
+    </div>
+  </section>
 
-  <!-- TASKS -->
-  <div class="card">
-    <h3>Employee Task</h3>
-    <input id="taskTitle" placeholder="Task">
-    <input id="taskAssigned" placeholder="Assigned To">
-    <input id="taskDue" type="date">
-    <button onclick="saveTask()">Save Task</button>
-  </div>
+  <section id="dashNotes" class="dashPage hidden">
+    <div class="card">
+      <h3>Internal Notes</h3>
+      <textarea id="internalNote" placeholder="Shop note"></textarea>
+      <button onclick="saveInternalNote()">Save Note</button>
+      <button onclick="loadInternalNotes()">Load Notes</button>
+    </div>
+  </section>
 
-  <!-- NOTES -->
-  <div class="card">
-    <h3>Internal Notes</h3>
-    <textarea id="internalNote"></textarea>
-    <button onclick="saveInternalNote()">Save Note</button>
-  </div>
-
-  <!-- LOAD BUTTONS -->
-  <div class="card">
-    <button onclick="loadCustomers()">Customers</button>
-    <button onclick="loadVehicles()">Vehicles</button>
-    <button onclick="loadAppointments()">Appointments</button>
-    <button onclick="loadEstimates()">Estimates</button>
-    <button onclick="loadJobs()">Jobs</button>
-    <button onclick="loadTasks()">Tasks</button>
-    <button onclick="loadInternalNotes()">Notes</button>
-  </div>
+  <section id="dashData" class="dashPage hidden">
+    <div class="card">
+      <h3>Records</h3>
+      <button onclick="loadCustomers()">Customers</button>
+      <button onclick="loadVehicles()">Vehicles</button>
+      <button onclick="loadAppointments()">Appointments</button>
+      <button onclick="loadEstimates()">Estimates</button>
+      <button onclick="loadJobs()">Jobs</button>
+      <button onclick="loadTasks()">Tasks</button>
+      <button onclick="loadInternalNotes()">Notes</button>
+    </div>
+  </section>
 
   <div id="results"></div>
-
 </section>
 
 <script type="module" src="app.js"></script>
-
 </body>
 </html>
