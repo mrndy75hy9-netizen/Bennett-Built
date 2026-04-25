@@ -1,5 +1,5 @@
-
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-app.js";
+
 import {
   getFirestore,
   collection,
@@ -31,15 +31,62 @@ function value(id) {
   return document.getElementById(id)?.value || "";
 }
 
+function clearValue(id) {
+  const field = document.getElementById(id);
+  if (field) field.value = "";
+}
+
 function setResults(html) {
-  document.getElementById("results").innerHTML = html;
+  const results = document.getElementById("results");
+  if (results) results.innerHTML = html;
 }
 
-function card(html) {
-  return `<div class="resultCard">${html}</div>`;
+function card(html, status = "") {
+  const statusClass = getStatusClass(status);
+  return `<div class="resultCard ${statusClass}">${html}</div>`;
 }
 
-/* PUBLIC CUSTOMER FORM */
+function getStatusClass(status) {
+  const s = String(status || "").toLowerCase();
+
+  if (s.includes("urgent")) return "urgentCard";
+  if (s.includes("waiting")) return "waitingCard";
+  if (s.includes("ready")) return "readyCard";
+  if (s.includes("completed") || s.includes("paid")) return "doneCard";
+
+  return "";
+}
+
+/* =========================
+   PAGE NAVIGATION
+========================= */
+
+window.showTab = function (tabId) {
+  document.querySelectorAll(".tabPage").forEach(page => {
+    page.classList.add("hidden");
+  });
+
+  const selected = document.getElementById(tabId);
+  if (selected) selected.classList.remove("hidden");
+
+  window.scrollTo({ top: 0, behavior: "smooth" });
+};
+
+window.showDash = function (tabId) {
+  document.querySelectorAll(".dashPage").forEach(page => {
+    page.classList.add("hidden");
+  });
+
+  const selected = document.getElementById(tabId);
+  if (selected) selected.classList.remove("hidden");
+
+  setResults("");
+};
+
+/* =========================
+   PUBLIC FORMS
+========================= */
+
 window.saveCustomer = async function () {
   const data = {
     name: value("custName"),
@@ -54,7 +101,7 @@ window.saveCustomer = async function () {
   };
 
   if (!data.name || !data.phone) {
-    alert("Enter customer name and phone.");
+    alert("Please enter customer name and phone.");
     return;
   }
 
@@ -68,10 +115,16 @@ window.saveCustomer = async function () {
     createdAt: new Date()
   });
 
-  alert("Customer saved!");
+  clearValue("custName");
+  clearValue("custPhone");
+  clearValue("custEmail");
+  clearValue("vehicleInfo");
+  clearValue("vin");
+  clearValue("issue");
+
+  alert("Customer intake saved!");
 };
 
-/* APPOINTMENT REQUEST */
 window.saveAppointment = async function () {
   const data = {
     name: value("apptName"),
@@ -85,15 +138,22 @@ window.saveAppointment = async function () {
   };
 
   if (!data.name || !data.phone || !data.date) {
-    alert("Enter name, phone, and appointment date.");
+    alert("Please enter name, phone, and requested date.");
     return;
   }
 
   await addDoc(collection(db, "appointments"), data);
+
+  clearValue("apptName");
+  clearValue("apptPhone");
+  clearValue("apptVehicle");
+  clearValue("apptDate");
+  clearValue("apptTime");
+  clearValue("apptService");
+
   alert("Appointment request saved!");
 };
 
-/* ESTIMATE REQUEST */
 window.saveEstimate = async function () {
   const data = {
     name: value("estName"),
@@ -105,15 +165,24 @@ window.saveEstimate = async function () {
   };
 
   if (!data.name || !data.phone || !data.details) {
-    alert("Enter name, phone, and job details.");
+    alert("Please enter name, phone, and job details.");
     return;
   }
 
   await addDoc(collection(db, "estimates"), data);
+
+  clearValue("estName");
+  clearValue("estPhone");
+  clearValue("estVehicle");
+  clearValue("estDetails");
+
   alert("Estimate request saved!");
 };
 
-/* AUTH */
+/* =========================
+   AUTH
+========================= */
+
 window.login = async function () {
   try {
     await signInWithEmailAndPassword(
@@ -121,7 +190,8 @@ window.login = async function () {
       value("loginEmail"),
       value("loginPassword")
     );
-    alert("Logged in!");
+
+    clearValue("loginPassword");
   } catch (error) {
     alert(error.message);
   }
@@ -133,19 +203,23 @@ window.logout = async function () {
 
 onAuthStateChanged(auth, (user) => {
   const dashboard = document.getElementById("dashboard");
-  const status = document.getElementById("loginStatus");
+  const loginStatus = document.getElementById("loginStatus");
 
   if (user) {
-    dashboard.classList.remove("hidden");
-    status.innerText = "Logged in as " + user.email;
+    dashboard?.classList.remove("hidden");
+    if (loginStatus) loginStatus.innerText = "Logged in as " + user.email;
     updateCounts();
   } else {
-    dashboard.classList.add("hidden");
-    status.innerText = "Not logged in";
+    dashboard?.classList.add("hidden");
+    if (loginStatus) loginStatus.innerText = "Not logged in";
+    setResults("");
   }
 });
 
-/* EMPLOYEE JOB LOG */
+/* =========================
+   DASHBOARD SAVES
+========================= */
+
 window.saveServiceLog = async function () {
   const data = {
     customer: value("jobCustomer"),
@@ -169,11 +243,21 @@ window.saveServiceLog = async function () {
   }
 
   await addDoc(collection(db, "serviceLogs"), data);
+
+  clearValue("jobCustomer");
+  clearValue("jobVehicle");
+  clearValue("assignedTo");
+  clearValue("partsNeeded");
+  clearValue("laborNotes");
+  clearValue("internalJobNotes");
+  clearValue("paymentStatus");
+  clearValue("paperwork");
+  clearValue("followUpDate");
+
   alert("Job log saved!");
   updateCounts();
 };
 
-/* EMPLOYEE TASKS */
 window.saveTask = async function () {
   const data = {
     title: value("taskTitle"),
@@ -189,10 +273,14 @@ window.saveTask = async function () {
   }
 
   await addDoc(collection(db, "employeeTasks"), data);
+
+  clearValue("taskTitle");
+  clearValue("taskAssigned");
+  clearValue("taskDue");
+
   alert("Task saved!");
 };
 
-/* INTERNAL NOTES */
 window.saveInternalNote = async function () {
   const data = {
     note: value("internalNote"),
@@ -205,16 +293,23 @@ window.saveInternalNote = async function () {
   }
 
   await addDoc(collection(db, "internalNotes"), data);
+
+  clearValue("internalNote");
+
   alert("Internal note saved!");
 };
 
-/* LOADERS */
+/* =========================
+   DASHBOARD LOADERS
+========================= */
+
 window.loadCustomers = async function () {
   const snap = await getDocs(collection(db, "customers"));
   let html = "<h3>Customers</h3>";
 
   snap.forEach(doc => {
     const c = doc.data();
+
     html += card(`
       <strong>${c.name || ""}</strong><br>
       <a href="tel:${c.phone || ""}">Call</a> |
@@ -226,7 +321,7 @@ window.loadCustomers = async function () {
       Issue: ${c.issue || ""}<br>
       <span class="badge">${c.status || "New"}</span>
       <span class="badge">${c.priority || "Normal"}</span>
-    `);
+    `, c.status);
   });
 
   setResults(html);
@@ -238,10 +333,12 @@ window.loadVehicles = async function () {
 
   snap.forEach(doc => {
     const v = doc.data();
+
     html += card(`
       <strong>${v.vehicle || ""}</strong><br>
       Customer: ${v.customerName || ""}<br>
-      Phone: ${v.phone || ""}<br>
+      <a href="tel:${v.phone || ""}">Call</a> |
+      <a href="sms:${v.phone || ""}">Text</a><br>
       VIN: ${v.vin || ""}
     `);
   });
@@ -255,6 +352,7 @@ window.loadAppointments = async function () {
 
   snap.forEach(doc => {
     const a = doc.data();
+
     html += card(`
       <strong>${a.name || ""}</strong><br>
       <a href="tel:${a.phone || ""}">Call</a> |
@@ -264,7 +362,7 @@ window.loadAppointments = async function () {
       Time: ${a.time || ""}<br>
       Service: ${a.service || ""}<br>
       <span class="badge">${a.status || ""}</span>
-    `);
+    `, a.status);
   });
 
   setResults(html);
@@ -276,6 +374,7 @@ window.loadEstimates = async function () {
 
   snap.forEach(doc => {
     const e = doc.data();
+
     html += card(`
       <strong>${e.name || ""}</strong><br>
       <a href="tel:${e.phone || ""}">Call</a> |
@@ -283,7 +382,7 @@ window.loadEstimates = async function () {
       Vehicle: ${e.vehicle || ""}<br>
       Details: ${e.details || ""}<br>
       <span class="badge">${e.status || ""}</span>
-    `);
+    `, e.status);
   });
 
   setResults(html);
@@ -295,6 +394,7 @@ window.loadJobs = async function () {
 
   snap.forEach(doc => {
     const j = doc.data();
+
     html += card(`
       <strong>${j.customer || ""}</strong><br>
       Vehicle: ${j.vehicle || ""}<br>
@@ -307,10 +407,11 @@ window.loadJobs = async function () {
       Follow-up: ${j.followUpDate || ""}<br>
       <span class="badge">${j.status || ""}</span>
       <span class="badge">${j.priority || ""}</span>
-    `);
+    `, j.status || j.priority);
   });
 
   setResults(html);
+  updateCounts();
 };
 
 window.loadTasks = async function () {
@@ -319,12 +420,13 @@ window.loadTasks = async function () {
 
   snap.forEach(doc => {
     const t = doc.data();
+
     html += card(`
       <strong>${t.title || ""}</strong><br>
       Assigned: ${t.assignedTo || ""}<br>
       Due: ${t.dueDate || ""}<br>
       <span class="badge">${t.status || ""}</span>
-    `);
+    `, t.status);
   });
 
   setResults(html);
@@ -336,6 +438,7 @@ window.loadInternalNotes = async function () {
 
   snap.forEach(doc => {
     const n = doc.data();
+
     html += card(`
       ${n.note || ""}
     `);
@@ -344,7 +447,10 @@ window.loadInternalNotes = async function () {
   setResults(html);
 };
 
-/* DASHBOARD COUNTS */
+/* =========================
+   COUNTERS
+========================= */
+
 async function updateCounts() {
   const jobs = await getDocs(collection(db, "serviceLogs"));
 
@@ -354,9 +460,11 @@ async function updateCounts() {
 
   jobs.forEach(doc => {
     const j = doc.data();
-    if (j.status !== "Completed" && j.status !== "Paid") active++;
-    if (j.status === "Waiting on Parts") parts++;
-    if (j.status === "Ready for Pickup") ready++;
+    const status = j.status || "";
+
+    if (status !== "Completed" && status !== "Paid") active++;
+    if (status === "Waiting on Parts") parts++;
+    if (status === "Ready for Pickup") ready++;
   });
 
   const activeEl = document.getElementById("activeCount");
@@ -367,17 +475,3 @@ async function updateCounts() {
   if (partsEl) partsEl.innerText = parts;
   if (readyEl) readyEl.innerText = ready;
 }
-window.showTab = function (tabId) {
-  document.querySelectorAll(".tabPage").forEach(page => {
-    page.classList.add("hidden");
-  });
-  document.getElementById(tabId).classList.remove("hidden");
-};
-
-window.showDash = function (tabId) {
-  document.querySelectorAll(".dashPage").forEach(page => {
-    page.classList.add("hidden");
-  });
-  document.getElementById(tabId).classList.remove("hidden");
-  document.getElementById("results").innerHTML = "";
-};
