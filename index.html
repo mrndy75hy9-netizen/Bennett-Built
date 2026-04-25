@@ -9,51 +9,23 @@
 <body>
 
 <header class="hero">
-  <div class="logoBox">LOGO HERE</div>
-  <h1>Bennett Built Automotive & Fab</h1>
-  <p>Yeah... we can fix that</p>
+  <div class="brand">
+    <img src="logo.png" class="logo">
+    <div class="brandText">
+      <h1>Bennett Built Automotive & Fab</h1>
+      <p>Yeah... we can fix that</p>
+    </div>
+  </div>
 </header>
-
-<section class="card">
-  <h2>Services</h2>
-  <ul>
-    <li>Diagnostics</li>
-    <li>Mechanical Repair</li>
-    <li>Custom Fabrication / Welding</li>
-    <li>Hydraulics / Pneumatics</li>
-    <li>Motors, equipment, odd jobs</li>
-  </ul>
-</section>
 
 <section class="card">
   <h2>Customer Intake</h2>
   <input id="custName" placeholder="Customer Name">
   <input id="custPhone" placeholder="Phone">
   <input id="custEmail" placeholder="Email">
-  <input id="vehicleInfo" placeholder="Vehicle: Year Make Model">
-  <input id="vin" placeholder="VIN optional">
+  <input id="vehicleInfo" placeholder="Vehicle">
   <textarea id="issue" placeholder="What needs fixed?"></textarea>
-  <button onclick="saveCustomer()">Submit Customer</button>
-</section>
-
-<section class="card">
-  <h2>Appointment Request</h2>
-  <input id="apptName" placeholder="Name">
-  <input id="apptPhone" placeholder="Phone">
-  <input id="apptVehicle" placeholder="Vehicle">
-  <input id="apptDate" type="date">
-  <input id="apptTime" type="time">
-  <textarea id="apptService" placeholder="Requested service"></textarea>
-  <button onclick="saveAppointment()">Request Appointment</button>
-</section>
-
-<section class="card">
-  <h2>Estimate Request</h2>
-  <input id="estName" placeholder="Name">
-  <input id="estPhone" placeholder="Phone">
-  <input id="estVehicle" placeholder="Vehicle">
-  <textarea id="estDetails" placeholder="Describe the job / issue"></textarea>
-  <button onclick="saveEstimate()">Request Estimate</button>
+  <button onclick="saveCustomer()">Submit</button>
 </section>
 
 <section class="card">
@@ -65,56 +37,25 @@
   <p id="loginStatus">Not logged in</p>
 </section>
 
-<section id="dashboard" class="dashboard hidden">
-  <h2>Private Shop Dashboard</h2>
+<section id="dashboard" class="hidden">
+  <h2>Dashboard</h2>
 
-  <div class="stats">
-    <div><strong id="activeCount">0</strong><span>Active Jobs</span></div>
-    <div><strong id="partsCount">0</strong><span>Waiting Parts</span></div>
-    <div><strong id="readyCount">0</strong><span>Ready</span></div>
-  </div>
+  <input id="jobCustomer" placeholder="Customer">
+  <input id="jobVehicle" placeholder="Vehicle">
+  <input id="assignedTo" placeholder="Assigned to">
+  <textarea id="laborNotes" placeholder="Notes"></textarea>
 
-  <div class="card">
-    <h3>Add Service / Job Log</h3>
-    <input id="jobCustomer" placeholder="Customer Name">
-    <input id="jobVehicle" placeholder="Vehicle">
-    <input id="assignedTo" placeholder="Assigned to">
-    <select id="jobStatus">
-      <option>New</option>
-      <option>Scheduled</option>
-      <option>Diagnosing</option>
-      <option>Waiting on Parts</option>
-      <option>In Progress</option>
-      <option>Ready for Pickup</option>
-      <option>Completed</option>
-      <option>Paid</option>
-    </select>
-    <input id="priority" placeholder="Priority: Normal / Urgent">
-    <textarea id="partsNeeded" placeholder="Parts needed"></textarea>
-    <textarea id="laborNotes" placeholder="Labor notes"></textarea>
-    <textarea id="internalJobNotes" placeholder="Internal notes"></textarea>
-    <button onclick="saveServiceLog()">Save Job Log</button>
-  </div>
+  <button onclick="saveServiceLog()">Save Job</button>
 
-  <div class="card">
-    <h3>Add Employee Task</h3>
-    <input id="taskTitle" placeholder="Task">
-    <input id="taskAssigned" placeholder="Assigned to">
-    <input id="taskDue" type="date">
-    <button onclick="saveTask()">Save Task</button>
-  </div>
+  <br><br>
 
-  <div class="buttons">
-    <button onclick="loadCustomers()">Customers</button>
-    <button onclick="loadAppointments()">Appointments</button>
-    <button onclick="loadEstimates()">Estimates</button>
-    <button onclick="loadJobs()">Job Logs</button>
-    <button onclick="loadTasks()">Tasks</button>
-  </div>
+  <button onclick="loadCustomers()">Customers</button>
+  <button onclick="loadJobs()">Jobs</button>
 
   <div id="results"></div>
 </section>
 
 <script type="module" src="app.js"></script>
+
 </body>
 </html>
