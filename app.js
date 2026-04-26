@@ -37,7 +37,10 @@ const db = getFirestore(app);
 const auth = getAuth(app);
 const storage = getStorage(app);
 
-/* BASIC HELPERS */
+let allJobs = [];
+let allCustomers = [];
+let allAppointments = [];
+let allEstimates = [];
 
 function value(id) {
   return document.getElementById(id)?.value?.trim() || "";
@@ -63,15 +66,24 @@ function setResults(html) {
   if (results) results.innerHTML = html;
 }
 
+function escapeHtml(text = "") {
+  return String(text)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
+
+function cleanPhone(phone = "") {
+  return phone.replace(/[^\d]/g, "");
+}
+
 function safeFileName(name) {
   return name
     .replace(/\s+/g, "-")
     .replace(/[^a-zA-Z0-9._-]/g, "")
     .toLowerCase();
-}
-
-function cleanPhone(phone = "") {
-  return phone.replace(/[^\d]/g, "");
 }
 
 function formatDate(timestamp) {
@@ -83,15 +95,6 @@ function formatDate(timestamp) {
   } catch {
     return "";
   }
-}
-
-function escapeHtml(text = "") {
-  return String(text)
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#039;");
 }
 
 function statusClass(status = "", priority = "") {
@@ -110,7 +113,36 @@ function card(html, className = "") {
   return `<div class="resultCard ${className}">${html}</div>`;
 }
 
-/* FILE UPLOADS */
+function contactLinks(phone = "", email = "") {
+  const clean = cleanPhone(phone);
+  let html = "";
+
+  if (clean) {
+    html += `<a href="tel:${clean}">Call</a> | <a href="sms:${clean}">Text</a><br>`;
+  }
+
+  if (email) {
+    html += `<a href="mailto:${escapeHtml(email)}">${escapeHtml(email)}</a><br>`;
+  }
+
+  return html;
+}
+
+function addCopyButton(label, text) {
+  const safe = escapeHtml(text || "");
+  return `<button onclick="copyText('${encodeURIComponent(text || "")}')">${label}</button>`;
+}
+
+window.copyText = async function (encodedText) {
+  const text = decodeURIComponent(encodedText || "");
+
+  try {
+    await navigator.clipboard.writeText(text);
+    alert("Copied.");
+  } catch {
+    alert(text);
+  }
+};
 
 async function uploadFiles(inputId, folderName) {
   const input = document.getElementById(inputId);
@@ -154,6 +186,15 @@ async function renderFileLinks(files = []) {
   return html;
 }
 
+async function newestDocs(collectionName) {
+  try {
+    const q = query(collection(db, collectionName), orderBy("createdAt", "desc"));
+    return await getDocs(q);
+  } catch {
+    return await getDocs(collection(db, collectionName));
+  }
+}
+
 /* NAVIGATION */
 
 window.showTab = function (id) {
@@ -174,20 +215,13 @@ window.showTab = function (id) {
   if (clicked) clicked.classList.add("activeTab");
 
   window.scrollTo({ top: 0, behavior: "smooth" });
+
+  if (id === "dashboard") {
+    loadDashboardHome();
+  }
 };
 
-window.showDash = function (id) {
-  document.querySelectorAll(".dashPage").forEach(section => {
-    section.classList.add("hidden");
-  });
-
-  const target = document.getElementById(id);
-  if (target) target.classList.remove("hidden");
-
-  setResults("");
-};
-
-/* CUSTOMER FORMS */
+/* PUBLIC CUSTOMER FORMS */
 
 window.saveCustomer = async function () {
   const name = value("custName");
@@ -199,8 +233,7 @@ window.saveCustomer = async function () {
   }
 
   try {
-    setText("customerStatus", "Uploading and saving... hang tight.");
-
+    setResults("");
     const files = await uploadFiles("custFiles", "publicUploads/customer-intake");
 
     const data = {
@@ -229,10 +262,8 @@ window.saveCustomer = async function () {
     ["custName", "custPhone", "custEmail", "vehicleInfo", "vin", "issue"].forEach(clearValue);
     clearFiles("custFiles");
 
-    setText("customerStatus", "Sent. We’ll take a look.");
     alert("Got it. We’ll take a look.");
   } catch (error) {
-    setText("customerStatus", "Something went wrong. Try again or text us.");
     alert("Error saving intake: " + error.message);
   }
 };
@@ -248,8 +279,6 @@ window.saveAppointment = async function () {
   }
 
   try {
-    setText("appointmentStatus", "Uploading and saving appointment request...");
-
     const files = await uploadFiles("apptFiles", "publicUploads/appointments");
 
     await addDoc(collection(db, "appointments"), {
@@ -267,10 +296,8 @@ window.saveAppointment = async function () {
     ["apptName", "apptPhone", "apptVehicle", "apptDate", "apptTime", "apptService"].forEach(clearValue);
     clearFiles("apptFiles");
 
-    setText("appointmentStatus", "Request sent. We’ll confirm before it’s officially scheduled.");
-    alert("Appointment request sent.");
+    alert("Appointment request sent. We’ll confirm before it’s officially scheduled.");
   } catch (error) {
-    setText("appointmentStatus", "Something went wrong. Try again or text us.");
     alert("Error saving appointment: " + error.message);
   }
 };
@@ -286,8 +313,6 @@ window.saveEstimate = async function () {
   }
 
   try {
-    setText("estimateStatus", "Uploading and saving estimate request...");
-
     const files = await uploadFiles("estFiles", "publicUploads/estimates");
 
     await addDoc(collection(db, "estimates"), {
@@ -303,15 +328,13 @@ window.saveEstimate = async function () {
     ["estName", "estPhone", "estVehicle", "estDetails"].forEach(clearValue);
     clearFiles("estFiles");
 
-    setText("estimateStatus", "Estimate request sent. We’ll give the best ballpark we can.");
-    alert("Estimate request sent.");
+    alert("Estimate request sent. We’ll give the best ballpark we can.");
   } catch (error) {
-    setText("estimateStatus", "Something went wrong. Try again or text us.");
     alert("Error saving estimate: " + error.message);
   }
 };
 
-/* AUTH */
+/* AUTH, OPTIONAL IF YOUR HTML HAS LOGIN FIELDS */
 
 window.login = async function () {
   const email = value("loginEmail");
@@ -338,22 +361,16 @@ window.logout = async function () {
 };
 
 onAuthStateChanged(auth, (user) => {
-  const dashboard = document.getElementById("dashboard");
   const loginStatus = document.getElementById("loginStatus");
 
   if (user) {
-    dashboard?.classList.remove("hidden");
     if (loginStatus) loginStatus.innerText = "Logged in as " + user.email;
-    updateCounts();
-    loadDashboardSummary();
   } else {
-    dashboard?.classList.add("hidden");
     if (loginStatus) loginStatus.innerText = "Not logged in";
-    setResults("");
   }
 });
 
-/* EMPLOYEE DASHBOARD SAVES */
+/* DASHBOARD BUSINESS FEATURES */
 
 window.saveServiceLog = async function () {
   const customer = value("jobCustomer");
@@ -365,16 +382,14 @@ window.saveServiceLog = async function () {
   }
 
   try {
-    setText("jobStatusLine", "Saving job...");
-
     const files = await uploadFiles("jobFiles", "jobs");
 
     await addDoc(collection(db, "serviceLogs"), {
       customer,
       vehicle,
       assignedTo: value("assignedTo"),
-      status: value("jobStatus"),
-      priority: value("priority"),
+      status: value("jobStatus") || "New",
+      priority: value("priority") || "Normal",
       partsNeeded: value("partsNeeded"),
       laborNotes: value("laborNotes"),
       internalNotes: value("internalJobNotes"),
@@ -399,12 +414,10 @@ window.saveServiceLog = async function () {
 
     clearFiles("jobFiles");
 
-    setText("jobStatusLine", "Job saved.");
-    await updateCounts();
-    await loadJobs();
+    alert("Job saved.");
+    loadJobs();
   } catch (err) {
-    setText("jobStatusLine", "Error saving job.");
-    alert("Error: " + err.message);
+    alert("Error saving job: " + err.message);
   }
 };
 
@@ -457,43 +470,73 @@ window.saveInternalNote = async function () {
   }
 };
 
-/* LOAD HELPERS */
+/* SEARCH + FILTER UI */
 
-async function newestDocs(collectionName) {
-  try {
-    const q = query(collection(db, collectionName), orderBy("createdAt", "desc"));
-    return await getDocs(q);
-  } catch {
-    return await getDocs(collection(db, collectionName));
-  }
+function dashboardTools() {
+  return `
+    <div class="dashSearch">
+      <input id="dashSearchBox" placeholder="Search customer, vehicle, phone, status, notes..." oninput="filterCurrentResults()">
+      <select id="dashStatusFilter" onchange="filterCurrentResults()">
+        <option value="">All statuses</option>
+        <option value="new">New</option>
+        <option value="diagnosing">Diagnosing</option>
+        <option value="in progress">In Progress</option>
+        <option value="waiting">Waiting on Parts</option>
+        <option value="ready">Ready for Pickup</option>
+        <option value="completed">Completed</option>
+        <option value="paid">Paid</option>
+        <option value="urgent">Urgent</option>
+      </select>
+    </div>
+  `;
 }
 
-function contactLinks(phone = "", email = "") {
-  const clean = cleanPhone(phone);
-  let html = "";
+function filterItems(items, fields) {
+  const search = value("dashSearchBox").toLowerCase();
+  const status = value("dashStatusFilter").toLowerCase();
 
-  if (clean) {
-    html += `<a href="tel:${clean}">Call</a> | <a href="sms:${clean}">Text</a><br>`;
-  }
+  return items.filter(item => {
+    const haystack = fields.map(field => item[field] || "").join(" ").toLowerCase();
+    const statusText = `${item.status || ""} ${item.priority || ""}`.toLowerCase();
 
-  if (email) {
-    html += `<a href="mailto:${escapeHtml(email)}">${escapeHtml(email)}</a><br>`;
-  }
+    const searchOk = !search || haystack.includes(search);
+    const statusOk = !status || statusText.includes(status);
 
-  return html;
+    return searchOk && statusOk;
+  });
 }
+
+window.filterCurrentResults = function () {
+  const mode = window.currentDashboardMode;
+
+  if (mode === "jobs") renderJobs(allJobs);
+  if (mode === "customers") renderCustomers(allCustomers);
+  if (mode === "appointments") renderAppointments(allAppointments);
+  if (mode === "estimates") renderEstimates(allEstimates);
+};
 
 /* LOAD RECORDS */
 
 window.loadCustomers = async function () {
+  window.currentDashboardMode = "customers";
   setResults("<h3>Loading customers...</h3>");
 
   const snap = await newestDocs("customers");
-  let html = "<h3>Customers</h3>";
+  allCustomers = snap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
 
-  for (const doc of snap.docs) {
-    const c = doc.data();
+  renderCustomers(allCustomers);
+};
+
+async function renderCustomers(items) {
+  const filtered = filterItems(items, ["name", "phone", "email", "vehicle", "vin", "issue", "status"]);
+  let html = dashboardTools() + "<h3>Customers</h3>";
+
+  if (!filtered.length) html += card("No matching customers.");
+
+  for (const c of filtered) {
     const files = await renderFileLinks(c.files);
+
+    const copyInfo = `${c.name || ""}\n${c.phone || ""}\n${c.email || ""}\n${c.vehicle || ""}\n${c.vin || ""}\n${c.issue || ""}`;
 
     html += card(`
       <strong>${escapeHtml(c.name || "")}</strong><br>
@@ -503,45 +546,32 @@ window.loadCustomers = async function () {
       VIN: ${escapeHtml(c.vin || "")}<br>
       Issue: ${escapeHtml(c.issue || "")}<br>
       Created: ${formatDate(c.createdAt)}<br>
-      <span class="badge">${escapeHtml(c.status || "New")}</span>
+      <span class="badge">${escapeHtml(c.status || "New")}</span><br>
+      ${addCopyButton("Copy Info", copyInfo)}
       ${files}
     `);
   }
 
   setResults(html);
-};
-
-window.loadVehicles = async function () {
-  setResults("<h3>Loading vehicles/projects...</h3>");
-
-  const snap = await newestDocs("vehicles");
-  let html = "<h3>Vehicles / Projects</h3>";
-
-  for (const doc of snap.docs) {
-    const v = doc.data();
-    const files = await renderFileLinks(v.files);
-
-    html += card(`
-      <strong>${escapeHtml(v.vehicle || "")}</strong><br>
-      Customer: ${escapeHtml(v.customerName || "")}<br>
-      Phone: ${escapeHtml(v.phone || "")}<br>
-      VIN: ${escapeHtml(v.vin || "")}<br>
-      Created: ${formatDate(v.createdAt)}
-      ${files}
-    `);
-  }
-
-  setResults(html);
-};
+}
 
 window.loadAppointments = async function () {
+  window.currentDashboardMode = "appointments";
   setResults("<h3>Loading appointments...</h3>");
 
   const snap = await newestDocs("appointments");
-  let html = "<h3>Appointments</h3>";
+  allAppointments = snap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
 
-  for (const doc of snap.docs) {
-    const a = doc.data();
+  renderAppointments(allAppointments);
+};
+
+async function renderAppointments(items) {
+  const filtered = filterItems(items, ["name", "phone", "vehicle", "date", "time", "service", "status"]);
+  let html = dashboardTools() + "<h3>Appointments</h3>";
+
+  if (!filtered.length) html += card("No matching appointments.");
+
+  for (const a of filtered) {
     const files = await renderFileLinks(a.files);
 
     html += card(`
@@ -558,16 +588,25 @@ window.loadAppointments = async function () {
   }
 
   setResults(html);
-};
+}
 
 window.loadEstimates = async function () {
+  window.currentDashboardMode = "estimates";
   setResults("<h3>Loading estimates...</h3>");
 
   const snap = await newestDocs("estimates");
-  let html = "<h3>Estimates</h3>";
+  allEstimates = snap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
 
-  for (const doc of snap.docs) {
-    const e = doc.data();
+  renderEstimates(allEstimates);
+};
+
+async function renderEstimates(items) {
+  const filtered = filterItems(items, ["name", "phone", "vehicle", "details", "status"]);
+  let html = dashboardTools() + "<h3>Estimates</h3>";
+
+  if (!filtered.length) html += card("No matching estimates.");
+
+  for (const e of filtered) {
     const files = await renderFileLinks(e.files);
 
     html += card(`
@@ -582,16 +621,38 @@ window.loadEstimates = async function () {
   }
 
   setResults(html);
-};
+}
 
 window.loadJobs = async function () {
+  window.currentDashboardMode = "jobs";
   setResults("<h3>Loading jobs...</h3>");
 
   const snap = await newestDocs("serviceLogs");
-  let html = "<h3>Jobs</h3>";
+  allJobs = snap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
 
-  for (const doc of snap.docs) {
-    const j = doc.data();
+  renderJobs(allJobs);
+};
+
+async function renderJobs(items) {
+  const filtered = filterItems(items, [
+    "customer",
+    "vehicle",
+    "assignedTo",
+    "status",
+    "priority",
+    "partsNeeded",
+    "laborNotes",
+    "internalNotes",
+    "paymentStatus",
+    "paperwork",
+    "followUpDate"
+  ]);
+
+  let html = dashboardTools() + "<h3>Jobs</h3>";
+
+  if (!filtered.length) html += card("No matching jobs.");
+
+  for (const j of filtered) {
     const files = await renderFileLinks(j.files);
     const cls = statusClass(j.status, j.priority);
 
@@ -612,6 +673,29 @@ window.loadJobs = async function () {
       <b>Created:</b> ${formatDate(j.createdAt)}
       ${files}
     `, cls);
+  }
+
+  setResults(html);
+}
+
+window.loadVehicles = async function () {
+  setResults("<h3>Loading vehicles/projects...</h3>");
+
+  const snap = await newestDocs("vehicles");
+  let html = "<h3>Vehicles / Projects</h3>";
+
+  for (const doc of snap.docs) {
+    const v = doc.data();
+    const files = await renderFileLinks(v.files);
+
+    html += card(`
+      <strong>${escapeHtml(v.vehicle || "")}</strong><br>
+      Customer: ${escapeHtml(v.customerName || "")}<br>
+      Phone: ${escapeHtml(v.phone || "")}<br>
+      VIN: ${escapeHtml(v.vin || "")}<br>
+      Created: ${formatDate(v.createdAt)}
+      ${files}
+    `);
   }
 
   setResults(html);
@@ -656,62 +740,73 @@ window.loadInternalNotes = async function () {
   setResults(html);
 };
 
-/* DASHBOARD SUMMARY */
+/* SMART DASHBOARD HOME */
 
-async function updateCounts() {
-  const jobs = await getDocs(collection(db, "serviceLogs"));
+window.loadDashboardHome = async function () {
+  setResults("<h3>Loading shop dashboard...</h3>");
+
+  const jobsSnap = await newestDocs("serviceLogs");
+  const appointmentsSnap = await newestDocs("appointments");
+
+  const jobs = jobsSnap.docs.map(doc => doc.data());
+  const appointments = appointmentsSnap.docs.map(doc => doc.data());
 
   let active = 0;
-  let parts = 0;
-  let ready = 0;
-
-  jobs.forEach(doc => {
-    const status = doc.data().status || "";
-
-    if (status !== "Completed" && status !== "Paid") active++;
-    if (status === "Waiting on Parts") parts++;
-    if (status === "Ready for Pickup") ready++;
-  });
-
-  setText("activeCount", active);
-  setText("partsCount", parts);
-  setText("readyCount", ready);
-}
-
-async function loadDashboardSummary() {
-  const jobs = await newestDocs("serviceLogs");
-
   let urgent = "";
   let waiting = "";
   let ready = "";
+  let upcoming = "";
 
-  jobs.forEach(doc => {
-    const j = doc.data();
+  jobs.forEach(j => {
+    const status = j.status || "";
+    const priority = j.priority || "";
+
+    if (status !== "Completed" && status !== "Paid") active++;
 
     const mini = `
       <strong>${escapeHtml(j.customer || "")}</strong><br>
       ${escapeHtml(j.vehicle || "")}<br>
-      <span class="badge">${escapeHtml(j.status || "")}</span>
-      <span class="badge">${escapeHtml(j.priority || "")}</span>
+      <span class="badge">${escapeHtml(status || "New")}</span>
+      <span class="badge">${escapeHtml(priority || "Normal")}</span>
     `;
 
-    if ((j.priority || "").toLowerCase() === "urgent") urgent += card(mini, "urgentCard");
-    if (j.status === "Waiting on Parts") waiting += card(mini, "waitingCard");
-    if (j.status === "Ready for Pickup") ready += card(mini, "readyCard");
+    if (priority.toLowerCase() === "urgent") urgent += card(mini, "urgentCard");
+    if (status === "Waiting on Parts") waiting += card(mini, "waitingCard");
+    if (status === "Ready for Pickup") ready += card(mini, "readyCard");
   });
 
-  const summary = `
-    <h3>Quick Shop Check</h3>
-    <h3>Urgent</h3>
+  appointments.slice(0, 5).forEach(a => {
+    upcoming += card(`
+      <strong>${escapeHtml(a.name || "")}</strong><br>
+      ${contactLinks(a.phone)}
+      ${escapeHtml(a.vehicle || "")}<br>
+      ${escapeHtml(a.date || "")} ${escapeHtml(a.time || "")}<br>
+      <span class="badge">${escapeHtml(a.status || "Requested")}</span>
+    `);
+  });
+
+  const html = `
+    <div class="dashboardStats">
+      <div class="statBox"><strong>${active}</strong><span>Active Jobs</span></div>
+      <div class="statBox"><strong>${jobs.length}</strong><span>Total Jobs</span></div>
+      <div class="statBox"><strong>${appointments.length}</strong><span>Appointments</span></div>
+    </div>
+
+    <h3>Urgent Jobs</h3>
     ${urgent || card("No urgent jobs right now.")}
+
     <h3>Waiting on Parts</h3>
     ${waiting || card("Nothing waiting on parts.")}
+
     <h3>Ready for Pickup</h3>
     ${ready || card("Nothing marked ready yet.")}
+
+    <h3>Upcoming Appointment Requests</h3>
+    ${upcoming || card("No appointment requests yet.")}
   `;
 
-  setResults(summary);
-}
+  setResults(html);
+};
 
 /* DEFAULT */
 
