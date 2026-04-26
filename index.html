@@ -1,140 +1,150 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Bennett Built</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<title>Bennett Built Automotive & Fab</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<!-- HERO -->
-<section class="hero">
+<header class="hero">
+<div class="heroInner">
 
-  <div class="heroInner">
+<img src="logo.png" class="logo">
 
-    <h1>BENNETT BUILT</h1>
-    <p class="sub">Automotive • Fabrication • Repair</p>
+<h1>BENNETT BUILT</h1>
+<p class="sub">Automotive • Fabrication • Repair</p>
 
-    <p class="mainLine">
-      Yeah… that ain’t right.
-    </p>
+<p class="mainLine">Yeah… that ain’t right.</p>
 
-    <p>
-      It was fine yesterday.  
-      It only does it sometimes.  
-      Somebody already looked at it.
-    </p>
+<p>It was fine yesterday. It only does it sometimes. Somebody already looked at it.</p>
+<p>We hear that a lot.</p>
+<p>Tell us what’s going on. We’ll sort it out.</p>
 
-    <p>
-      Yeah. We hear that a lot.
-    </p>
+<div class="ctaRow">
+<a href="tel:15023700321" class="btn">Call</a>
+<a href="sms:15023700321?body=Hey, something ain’t right." class="btn alt">Text</a>
+<a href="#intake" class="btn">Send Details</a>
+</div>
 
-    <div class="ctaRow">
-      <a href="#intake" class="btn">Tell Us What Happened</a>
-      <a href="#estimate" class="btn alt">Ballpark</a>
-    </div>
+</div>
+</header>
 
-  </div>
-
-</section>
-
-<!-- RELATABLE STRIP -->
 <section class="strip">
-
-  <p>“It only does it sometimes.”</p>
-  <p>“It was fine yesterday.”</p>
-  <p>“Now it’s doing something different.”</p>
-  <p>“It’s not making the noise right now.”</p>
-
+<p>“It was fine yesterday.”</p>
+<p>“It only does it sometimes.”</p>
+<p>“It just got worked on.”</p>
+<p>“Now it’s doing something else.”</p>
 </section>
 
-<!-- SERVICES -->
 <section class="section">
-
-  <h2>WHAT WE HANDLE</h2>
-
-  <div class="grid">
-
-    <div class="card">
-      <h3>Diagnostics</h3>
-      <p>Lights. No-starts. Weird stuff that doesn’t make sense yet.</p>
-    </div>
-
-    <div class="card">
-      <h3>Repairs</h3>
-      <p>Brakes, leaks, worn parts, stuff that finally got loud enough.</p>
-    </div>
-
-    <div class="card">
-      <h3>Fabrication</h3>
-      <p>Custom fixes. Welding. Making things work.</p>
-    </div>
-
-    <div class="card">
-      <h3>Hydraulics</h3>
-      <p>Lines, pressure issues, leaks, equipment problems.</p>
-    </div>
-
-  </div>
-
+<h2>Some jobs are simple. Some ain’t.</h2>
+<p>Sometimes it’s one bad part. Sometimes it’s three problems pretending to be one.</p>
+<p>Sometimes it only messes up when nobody’s around to see it.</p>
+<p>Sometimes it got “fixed” and came back with a new attitude.</p>
+<p>That’s usually when people end up here.</p>
 </section>
 
-<!-- WHAT WE DON'T DO -->
+<section class="section">
+<h2>What we handle</h2>
+
+<div class="grid">
+
+<div class="card">
+<h3>Won’t start / acting weird</h3>
+<p>Lights on. Not starting. Doing something that doesn’t make sense.</p>
+</div>
+
+<div class="card">
+<h3>Leaks, noise, something broke</h3>
+<p>Fluid leaks, grinding, shaking, or something finally gave out.</p>
+</div>
+
+<div class="card">
+<h3>Need it built?</h3>
+<p>Custom brackets, welding, fabrication, making something work.</p>
+</div>
+
+<div class="card">
+<h3>Pressure / line issues</h3>
+<p>Hydraulics, fittings, leaks, pressure problems, equipment issues.</p>
+</div>
+
+</div>
+</section>
+
 <section class="section dark">
-
-  <h2>WHAT WE DON’T DO</h2>
-
-  <ul>
-    <li>No guessing</li>
-    <li>No throwing parts at it</li>
-    <li>No pretending it’s simple when it’s not</li>
-    <li>No runaround</li>
-  </ul>
-
+<h2>What we don’t do</h2>
+<ul>
+<li>We don’t guess and hope it works.</li>
+<li>We don’t throw parts at it just to see.</li>
+<li>We don’t pretend it’s simple when it’s not.</li>
+<li>We don’t talk to you like you should already know.</li>
+</ul>
+<p>If it’s simple, we’ll tell you. If it’s not, we’ll tell you that too.</p>
 </section>
 
-<!-- INTAKE -->
 <section id="intake" class="section">
+<h2>It ain’t right?</h2>
 
-  <h2>IT AIN’T RIGHT?</h2>
+<form id="intakeForm">
+<input id="custName" placeholder="Name">
+<input id="custPhone" placeholder="Phone">
+<textarea id="issue" placeholder="What’s it doing?"></textarea>
 
-  <p>
-    You don’t need the right words.  
-    Just tell us what it’s doing.
-  </p>
+<input id="custFiles" type="file" multiple>
 
-  <form>
-    <input placeholder="Name">
-    <input placeholder="Phone">
-    <textarea placeholder="What’s going on?"></textarea>
-    <button>Send</button>
-  </form>
-
+<button type="button" onclick="saveCustomer()">Send</button>
+<p id="customerStatus"></p>
+</form>
 </section>
 
-<!-- ESTIMATE -->
-<section id="estimate" class="section dark">
+<section class="section dark">
+<h2>Need a ballpark?</h2>
 
-  <h2>NEED A BALLPARK?</h2>
+<form id="estimateForm">
+<input id="estName" placeholder="Name">
+<input id="estPhone" placeholder="Phone">
+<textarea id="estDetails" placeholder="Details"></textarea>
 
-  <p>
-    Send what you’ve got.  
-    We’ll give you a starting point.
-  </p>
+<input id="estFiles" type="file" multiple>
 
-  <form>
-    <input placeholder="Name">
-    <input placeholder="Phone">
-    <textarea placeholder="Details"></textarea>
-    <button>Get Ballpark</button>
-  </form>
+<button type="button" onclick="saveEstimate()">Send</button>
+<p id="estimateStatus"></p>
+</form>
+</section>
+
+<section class="section">
+<h2>Shop Login</h2>
+
+<input id="loginEmail" placeholder="Email">
+<input id="loginPassword" type="password" placeholder="Password">
+
+<button onclick="login()">Login</button>
+<button onclick="logout()">Logout</button>
+
+<p id="loginStatus"></p>
+</section>
+
+<section id="dashboard" class="section" style="display:none;">
+
+<h2>Dashboard</h2>
+
+<button onclick="loadCustomers()">Customers</button>
+
+<div id="results"></div>
 
 </section>
 
 <footer>
-  <p>Bennett Built • Georgetown KY</p>
+<p>Bennett Built Automotive & Fab</p>
+<p>Georgetown, KY</p>
+<p>Yeah… that ain’t right.</p>
 </footer>
+
+<script type="module" src="app.js"></script>
 
 </body>
 </html>
