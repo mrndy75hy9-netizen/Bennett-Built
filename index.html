@@ -1,623 +1,209 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta charset="UTF-8">
   <title>Bennett Built Automotive & Fab</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<a class="stickyCall" href="sms:5023700321">Text the Shop</a>
-
-<header class="siteHero">
-  <div class="heroFlag"></div>
-  <div class="heroTools"></div>
-  <div class="heroGlow"></div>
-
+<!-- 🔥 HERO -->
+<header class="hero">
   <div class="heroOverlay">
-    <div class="brandWrap">
-      <div class="wideLogoFrame">
-        <img src="F0B8591E-F6AB-4C12-8A27-4932BF2D1E67.png" class="wideLogo" alt="Bennett Built Automotive & Fab Logo">
+
+    <div class="heroContent">
+
+      <img src="logo.png" class="logo">
+
+      <h1>Bennett Built Automotive & Fab</h1>
+      <p class="tagline">yeah... we can fix that</p>
+
+      <p class="heroText">
+        Real work. No guessing. No shortcuts.  
+        Diagnostics, fabrication, repair, and builds done right the first time.
+      </p>
+
+      <div class="heroBtns">
+        <button class="accentBtn" onclick="showTab('intake')">Request Service</button>
+        <button onclick="showTab('estimate')">Get Estimate</button>
+        <button onclick="showTab('appointments')">Book Appointment</button>
       </div>
 
-      <div class="brandText">
-        <p class="eyebrow">Georgetown, Kentucky • Repair • Diagnostics • Fabrication</p>
-        <h1>Bennett Built Automotive & Fab</h1>
-        <p class="tagline">Yeah... we can fix that.</p>
-
-        <p class="heroCopy">
-          Vehicles, equipment, fabrication, hydraulics, no-starts, mystery noises, and the stuff that suddenly quit working.
-        </p>
-
-        <p class="heroCopy">
-          No guessing. No parts roulette. We figure out what’s actually wrong and tell you where it stands.
-        </p>
-
-        <div class="heroButtons">
-          <button onclick="showTab('intake')">Tell Us What’s Going On</button>
-          <button onclick="showTab('estimates')" class="accentBtn">Get a Ballpark</button>
-          <a class="buttonLink ghostBtn" href="sms:5023700321">Text 502-370-0321</a>
-        </div>
-      </div>
     </div>
+
   </div>
 </header>
 
+<!-- 🔧 NAV -->
 <nav class="mainTabs">
-  <button onclick="showTab('home')">Start Here</button>
+  <button onclick="showTab('home')" class="activeTab">Home</button>
   <button onclick="showTab('services')">Services</button>
-  <button onclick="showTab('intake')">It Ain’t Right</button>
-  <button onclick="showTab('appointments')">Schedule</button>
-  <button onclick="showTab('estimates')">Ballpark</button>
-  <button onclick="showTab('reviews')">Reviews</button>
-  <button onclick="showTab('meet')">The Bennetts</button>
-  <button onclick="showTab('loginArea')">Shop Login</button>
+  <button onclick="showTab('intake')">Service Request</button>
+  <button onclick="showTab('appointments')">Appointments</button>
+  <button onclick="showTab('estimate')">Estimate</button>
+  <button onclick="showTab('dashboard')">Dashboard</button>
 </nav>
 
 <main>
 
+<!-- 🏠 HOME -->
 <section id="home" class="tabPage">
 
-  <div class="featureHero shopPanel">
-    <div>
-      <p class="eyebrow">Start here</p>
-      <h2>Some jobs are simple. Some aren’t. We handle both.</h2>
+  <div class="grid3">
 
-      <p>
-        Sometimes it’s one bad part. Sometimes it’s three problems stacked together pretending to be one.
-      </p>
-
-      <p>
-        You don’t need to know the exact diagnosis before you call us. Tell us what happened, what changed, what it’s doing now, and what’s already been tried.
-      </p>
-
-      <p>
-        We’ll sort through it, tell you what makes sense, and be straight with you about what it needs.
-      </p>
-
-      <div class="sectionButtons">
-        <button onclick="showTab('intake')">Send the Situation</button>
-        <button onclick="showTab('services')" class="ghostBtn">See What We Handle</button>
-      </div>
-    </div>
-  </div>
-
-  <div class="trustBadges">
-    <div>Family Shop</div>
-    <div>Call or Text Friendly</div>
-    <div>No Parts Roulette</div>
-    <div>Straight Answers</div>
-  </div>
-
-  <div class="processStrip">
-    <div><span>01</span>Tell us what’s going on</div>
-    <div><span>02</span>We sort through it</div>
-    <div><span>03</span>We fix what’s wrong</div>
-    <div><span>04</span>You know where it stands</div>
-  </div>
-
-  <div class="garageGallery">
-    <div class="galleryCard diagnosticsPic">Diagnostics</div>
-    <div class="galleryCard repairPic">Repair</div>
-    <div class="galleryCard fabPic">Fabrication</div>
-    <div class="galleryCard hydroPic">Hydraulics</div>
-  </div>
-
-  <div class="quickGrid">
-    <div class="miniCard">
-      <span>01</span>
-      <h3>Bring it as-is</h3>
-      <p>
-        You don’t have to explain it perfectly. Send the real version: what happened, what changed, what you’ve noticed, and what has already been tried.
-      </p>
-    </div>
-
-    <div class="miniCard">
-      <span>02</span>
-      <h3>No parts roulette</h3>
-      <p>
-        We don’t throw parts at a problem and hope it gets tired. We check what needs checked and work from there.
-      </p>
-    </div>
-
-    <div class="miniCard">
-      <span>03</span>
-      <h3>No disappearing act</h3>
-      <p>
-        Notes, photos, parts, jobs, and follow-ups stay together. No chasing ten text threads and a receipt from last Tuesday.
-      </p>
-    </div>
-  </div>
-
-  <div class="shopStrip">
-    <h3>If this sounds familiar...</h3>
-    <ul>
-      <li>“It only acts up sometimes.”</li>
-      <li>“It was just worked on.”</li>
-      <li>“It started after something else got fixed.”</li>
-      <li>“Nobody else could figure it out.”</li>
-      <li>“It’s making a noise, but not right now.”</li>
-    </ul>
-  </div>
-
-  <div class="serviceMenuBoard">
-    <p class="eyebrow">Service board</p>
-    <h2>What we handle</h2>
-
-    <div class="menuRows">
-      <div>
-        <strong>Diagnostics</strong>
-        <span>warning lights, no-starts, electrical issues, mystery symptoms</span>
-      </div>
-
-      <div>
-        <strong>Mechanical Repair</strong>
-        <span>brakes, suspension, leaks, cooling, engine-related work</span>
-      </div>
-
-      <div>
-        <strong>Fabrication & Welding</strong>
-        <span>brackets, mounts, repairs, sturdy custom fixes</span>
-      </div>
-
-      <div>
-        <strong>Hydraulics / Pneumatics</strong>
-        <span>lines, fittings, leaks, pressure problems</span>
-      </div>
-
-      <div>
-        <strong>Equipment / Motors</strong>
-        <span>work gear, machines, small equipment, motors</span>
-      </div>
-
-      <div>
-        <strong>Head-Scratchers</strong>
-        <span>half-fixed jobs, weird failures, oddball problems</span>
-      </div>
-    </div>
-
-    <button onclick="showTab('services')">See Full Services</button>
-  </div>
-
-  <div class="homeSplit">
-    <div class="storyCard cozyCard">
-      <h3>Small shop. Real people.</h3>
-      <p>
-        No service desk shuffle. No mystery middleman. No message disappearing into the void.
-      </p>
-      <p>
-        You talk to us. We keep it straight. If something needs done, we’ll tell you. If something can wait, we’ll tell you that too.
-      </p>
-      <button onclick="showTab('meet')" class="ghostBtn">Meet the Bennetts</button>
-    </div>
-
-    <div class="storyCard photoGuideCard">
-      <h3>What to send us</h3>
-      <p>
-        Photos of warning lights, leaks, damage, VIN plate, parts, paperwork, or the exact thing you’re trying to explain with hand gestures.
-      </p>
-      <p>
-        Better pictures. Better details. Better ballpark.
-      </p>
-      <button onclick="showTab('estimates')" class="accentBtn">Get a Ballpark</button>
-    </div>
-  </div>
-
-  <div class="ctaBlock">
-    <h3>Got something acting up?</h3>
-    <p>
-      Don’t overthink it. Send the situation and we’ll go from there.
-    </p>
-    <button onclick="showTab('intake')">Tell Us What’s Going On</button>
-  </div>
-</section>
-
-<section id="services" class="tabPage hidden">
-  <div class="pageBanner servicesBanner">
-    <div>
-      <p class="eyebrow">What we handle</p>
-      <h2>The regular stuff, the custom stuff, and the “you gotta see this” stuff.</h2>
-      <p>
-        If it makes sense, we fix it. If it doesn’t make sense, we figure out why first.
-      </p>
-    </div>
-  </div>
-
-  <div class="serviceGrid">
-    <div class="serviceCard">
+    <div class="card">
       <h3>Diagnostics</h3>
-      <p>Warning lights, no-starts, weird noises, electrical issues, mystery symptoms, and the classic “it only does it sometimes.”</p>
-      <span>Track it down before replacing half the vehicle.</span>
+      <p>No guessing. We find the actual problem.</p>
     </div>
 
-    <div class="serviceCard">
-      <h3>Mechanical Repair</h3>
-      <p>Brakes, suspension, cooling systems, leaks, worn parts, maintenance, and things that got loud enough to stop ignoring.</p>
-      <span>Fix what’s worn, broken, leaking, or about to ruin your day.</span>
+    <div class="card">
+      <h3>Fabrication</h3>
+      <p>Custom work, not parts swapping.</p>
     </div>
 
-    <div class="serviceCard">
-      <h3>Fabrication & Welding</h3>
-      <p>Brackets, mounts, repairs, metal work, custom ideas, sturdy fixes, and “can we make this work?” projects.</p>
-      <span>Make it work. Make it hold. Make it right.</span>
+    <div class="card">
+      <h3>Repairs</h3>
+      <p>Done right so you’re not back next week.</p>
     </div>
 
-    <div class="serviceCard">
-      <h3>Hydraulics / Pneumatics</h3>
-      <p>Lines, fittings, pressure issues, leaks, motors, and equipment that picked the worst possible time to act up.</p>
-      <span>Pressure problems handled without the guessing game.</span>
-    </div>
-
-    <div class="serviceCard">
-      <h3>Equipment / Motors</h3>
-      <p>Work gear, machines, small equipment, motors, and the stuff that has a job to do.</p>
-      <span>If it needs to run, move, lift, pull, or work, start here.</span>
-    </div>
-
-    <div class="serviceCard">
-      <h3>Head-Scratchers</h3>
-      <p>Half-fixed jobs, hard-to-explain problems, mystery failures, oddball repairs, and things nobody wants to be responsible for.</p>
-      <span>We’re not scared of those.</span>
-    </div>
   </div>
 
-  <div class="shopStrip">
-    <h3>What we don’t do</h3>
+  <!-- HOW IT WORKS -->
+  <div class="process">
+    <div>Submit Request</div>
+    <div>We Review</div>
+    <div>We Contact You</div>
+    <div>We Fix It</div>
+  </div>
+
+  <!-- TRUST -->
+  <div class="trust">
+    <h3>No BS Policy</h3>
     <ul>
-      <li>We don’t guess and throw parts at it.</li>
-      <li>We don’t give a final price without seeing it.</li>
-      <li>We don’t rush work just to get it out the door.</li>
-      <li>We don’t pretend every problem is a quick fix.</li>
+      <li>No unnecessary parts</li>
+      <li>No upselling</li>
+      <li>No guessing repairs</li>
+      <li>We tell you straight</li>
     </ul>
   </div>
 
-  <div class="disclaimerCard">
-    <h3>About estimates</h3>
-    <p>
-      We can give you a ballpark from what you send. Until it’s actually in front of us, it’s an educated starting point, not a final answer.
-    </p>
-    <p>
-      Better details and better pictures make that starting point a whole lot better.
-    </p>
-  </div>
 </section>
 
-<section id="intake" class="tabPage hidden">
-  <div class="pageBanner intakeBanner">
-    <div>
-      <p class="eyebrow">Customer form</p>
-      <h2>It ain’t right? Tell us what happened.</h2>
-      <p>
-        You don’t need shop vocabulary. You don’t need a diagnosis. Just tell us the real version.
-      </p>
-    </div>
+<!-- 🔧 SERVICES -->
+<section id="services" class="tabPage hidden">
+
+  <h2>What We Do</h2>
+
+  <div class="grid3">
+
+    <div class="serviceCard">Engine Work</div>
+    <div class="serviceCard">Diagnostics</div>
+    <div class="serviceCard">Electrical</div>
+    <div class="serviceCard">Fabrication</div>
+    <div class="serviceCard">Suspension</div>
+    <div class="serviceCard">Custom Builds</div>
+
   </div>
 
-  <div class="shopStrip">
-    <h3>What helps us help you</h3>
-    <p>
-      Tell us what changed, when it started, what it sounds like, what lights are on, what has already been replaced, and whether it comes and goes.
-    </p>
-  </div>
+</section>
+
+<!-- 📋 SERVICE REQUEST -->
+<section id="intake" class="tabPage hidden">
+
+  <h2>Service Request</h2>
 
   <div class="formCard">
-    <h3>Send the situation</h3>
-    <p id="customerStatus" class="statusLine"></p>
 
-    <input id="custName" placeholder="Customer Name">
+    <input id="custName" placeholder="Name">
     <input id="custPhone" placeholder="Phone">
     <input id="custEmail" placeholder="Email">
-    <input id="vehicleInfo" placeholder="Vehicle, equipment, or project">
-    <input id="vin" placeholder="VIN optional">
 
-    <textarea id="issue" placeholder="What happened? What is it doing now? What has already been tried? Any noises, leaks, warning lights, or weird timing?"></textarea>
+    <input id="vehicleInfo" placeholder="Vehicle / Project">
+    <input id="vin" placeholder="VIN (optional)">
 
-    <label class="uploadLabel" for="custFiles">Add photos or documents</label>
-    <input id="custFiles" class="fileInput" type="file" multiple accept="image/*,.pdf,.doc,.docx">
+    <textarea id="issue" placeholder="What’s going on?"></textarea>
 
-    <p class="smallNote">
-      Helpful photos: warning lights, damage, leaks, VIN plate, parts, paperwork, or anything hard to explain.
-    </p>
+    <input type="file" id="custFiles" multiple>
 
-    <button onclick="saveCustomer()">Send It Over</button>
+    <button onclick="saveCustomer()">Submit</button>
+
   </div>
+
 </section>
 
+<!-- 📅 APPOINTMENTS -->
 <section id="appointments" class="tabPage hidden">
-  <div class="pageBanner appointmentBanner">
-    <div>
-      <p class="eyebrow">Schedule</p>
-      <h2>Need us to put eyes on it?</h2>
-      <p>
-        Send what’s going on and when you’re free. We’ll confirm before anything is officially on the schedule.
-      </p>
-    </div>
-  </div>
+
+  <h2>Appointment Request</h2>
 
   <div class="formCard">
-    <h3>Get on the schedule</h3>
-    <p id="appointmentStatus" class="statusLine"></p>
 
     <input id="apptName" placeholder="Name">
     <input id="apptPhone" placeholder="Phone">
-    <input id="apptVehicle" placeholder="Vehicle, equipment, or project">
+    <input id="apptVehicle" placeholder="Vehicle">
 
-    <label for="apptDate">Pick a date</label>
     <input id="apptDate" type="date">
-
-    <label for="apptTime">Pick a time</label>
     <input id="apptTime" type="time">
 
-    <textarea id="apptService" placeholder="What do you need looked at?"></textarea>
+    <input id="apptService" placeholder="Service Needed">
 
-    <label class="uploadLabel" for="apptFiles">Add photos or documents</label>
-    <input id="apptFiles" class="fileInput" type="file" multiple accept="image/*,.pdf,.doc,.docx">
+    <input type="file" id="apptFiles" multiple>
 
-    <button onclick="saveAppointment()">Request a Time</button>
+    <button onclick="saveAppointment()">Request</button>
+
   </div>
+
 </section>
 
-<section id="estimates" class="tabPage hidden">
-  <div class="pageBanner estimateBanner">
-    <div>
-      <p class="eyebrow">Ballpark</p>
-      <h2>Need a rough idea before you drag it over here?</h2>
-      <p>
-        Send pictures, details, and the best explanation you’ve got. We’ll give you the most honest starting point we can.
-      </p>
-    </div>
-  </div>
+<!-- 💰 ESTIMATE -->
+<section id="estimate" class="tabPage hidden">
+
+  <h2>Estimate Request</h2>
 
   <div class="formCard">
-    <h3>Get a ballpark</h3>
-    <p id="estimateStatus" class="statusLine"></p>
 
     <input id="estName" placeholder="Name">
     <input id="estPhone" placeholder="Phone">
-    <input id="estVehicle" placeholder="Vehicle, equipment, or project">
+    <input id="estVehicle" placeholder="Vehicle">
 
-    <textarea id="estDetails" placeholder="What needs fixed, built, changed, or figured out?"></textarea>
+    <textarea id="estDetails" placeholder="What do you need done?"></textarea>
 
-    <label class="uploadLabel" for="estFiles">Add photos or documents</label>
-    <input id="estFiles" class="fileInput" type="file" multiple accept="image/*,.pdf,.doc,.docx">
+    <input type="file" id="estFiles" multiple>
 
-    <p class="smallNote">
-      Better pictures. Better ballpark. Less guessing in the dark.
-    </p>
+    <button onclick="saveEstimate()">Request Estimate</button>
 
-    <button onclick="saveEstimate()">Get a Ballpark</button>
   </div>
+
 </section>
 
-<section id="reviews" class="tabPage hidden">
-  <div class="pageBanner reviewsBanner">
-    <div>
-      <p class="eyebrow">What folks say</p>
-      <h2>Good work. Straight answers. No runaround.</h2>
-      <p>
-        Real reviews will go here once the links are ready. No fake testimonial circus.
-      </p>
-    </div>
+<!-- 🧠 DASHBOARD -->
+<section id="dashboard" class="tabPage hidden">
+
+  <h2>Shop Dashboard</h2>
+
+  <div class="dashControls">
+    <button onclick="loadCustomers()">Customers</button>
+    <button onclick="loadJobs()">Jobs</button>
+    <button onclick="loadAppointments()">Appointments</button>
+    <button onclick="loadEstimates()">Estimates</button>
   </div>
-
-  <div class="reviewsGrid">
-    <div class="reviewCard">
-      <div class="stars">★★★★★</div>
-      <p>Real customer reviews coming soon.</p>
-    </div>
-
-    <div class="reviewCard">
-      <div class="stars">★★★★★</div>
-      <p>Google and Facebook review links can be added here.</p>
-    </div>
-
-    <div class="reviewCard">
-      <div class="stars">★★★★★</div>
-      <p>Had work done? Tell us how it went.</p>
-    </div>
-  </div>
-</section>
-
-<section id="meet" class="tabPage hidden">
-  <div class="pageBanner meetBanner">
-    <div>
-      <p class="eyebrow">Small shop. Real people.</p>
-      <h2>Meet the Bennetts</h2>
-      <p>
-        No service desk shuffle. No mystery middleman. You talk to us, and we keep the details together.
-      </p>
-    </div>
-  </div>
-
-  <div class="splitPanel">
-    <div class="storyCard">
-      <h3>Ivan Bennett</h3>
-      <p class="roleTitle">Mechanic • Fabrication • Problem Solver</p>
-      <p>
-        Ivan has over 20 years of hands-on experience fixing, building, fabricating, and figuring out problems that don’t always make sense at first glance.
-      </p>
-      <p>
-        He’s the one people call when the easy fix didn’t fix anything.
-      </p>
-      <p>
-        Some jobs need tools. Some need time. Some need someone willing to stand there, stare at it, and not pretend the first answer is always the right one.
-      </p>
-    </div>
-
-    <div class="storyCard">
-      <h3>Nancy Bennett</h3>
-      <p class="roleTitle">Business Side • Customer Support</p>
-      <p>
-        Nancy keeps the business side from turning into a pile of notes, screenshots, parts, and “wait, who was that again?”
-      </p>
-      <p>
-        Customers, jobs, follow-ups, details. Nothing important gets ignored on purpose, and a whole lot less gets lost.
-      </p>
-      <p>
-        If you get clear answers, updates, and the details are where they’re supposed to be, that’s probably her.
-      </p>
-    </div>
-  </div>
-</section>
-
-<section id="loginArea" class="tabPage hidden">
-  <div class="pageBanner employeeBanner privateBanner">
-    <div>
-      <p class="eyebrow">Shop access</p>
-      <h2>Employee side.</h2>
-      <p>
-        Jobs, notes, photos, parts, follow-ups. The stuff that keeps work from living in six different text threads.
-      </p>
-    </div>
-  </div>
-
-  <div class="formCard privateCard">
-    <h3>Shop login</h3>
-
-    <input id="loginEmail" placeholder="Email">
-    <input id="loginPassword" type="password" placeholder="Password">
-
-    <button onclick="login()">Get In</button>
-    <button onclick="logout()" class="ghostBtn">Sign Out</button>
-
-    <p id="loginStatus" class="loginStatus">Not logged in</p>
-  </div>
-</section>
-
-<section id="dashboard" class="hidden dashboardShell privateDashboard">
-  <nav class="dashTabs">
-    <button onclick="showDash('dashOverview')">Overview</button>
-    <button onclick="showDash('dashJobs')">Jobs</button>
-    <button onclick="showDash('dashTasks')">Tasks</button>
-    <button onclick="showDash('dashNotes')">Notes</button>
-    <button onclick="showDash('dashRecords')">Records</button>
-  </nav>
-
-  <section id="dashOverview" class="dashPage">
-    <div class="dashboardHeader">
-      <h2>Shop Dashboard</h2>
-      <p>
-        Customers. Jobs. Notes. Parts. Photos. Follow-ups. Everything in one place.
-      </p>
-    </div>
-
-    <div class="stats">
-      <div><strong id="activeCount">0</strong><span>Active Jobs</span></div>
-      <div><strong id="partsCount">0</strong><span>Waiting Parts</span></div>
-      <div><strong id="readyCount">0</strong><span>Ready</span></div>
-    </div>
-
-    <div class="dashActions">
-      <button onclick="loadCustomers()">Pull Customers</button>
-      <button onclick="loadJobs()">Pull Jobs</button>
-      <button onclick="loadTasks()">Pull Tasks</button>
-    </div>
-  </section>
-
-  <section id="dashJobs" class="dashPage hidden">
-    <div class="formCard">
-      <h3>Create Job</h3>
-      <p id="jobStatusLine" class="statusLine"></p>
-
-      <input id="jobCustomer" placeholder="Customer name">
-      <input id="jobVehicle" placeholder="Vehicle, equipment, or project">
-      <input id="assignedTo" placeholder="Assigned To">
-
-      <select id="jobStatus">
-        <option>New</option>
-        <option>Diagnosing</option>
-        <option>In Progress</option>
-        <option>Waiting on Parts</option>
-        <option>Ready for Pickup</option>
-        <option>Completed</option>
-        <option>Paid</option>
-      </select>
-
-      <select id="priority">
-        <option>Normal</option>
-        <option>Urgent</option>
-        <option>Low</option>
-      </select>
-
-      <textarea id="partsNeeded" placeholder="Parts needed"></textarea>
-      <textarea id="laborNotes" placeholder="Labor / work notes"></textarea>
-      <textarea id="internalJobNotes" placeholder="Internal notes"></textarea>
-
-      <input id="paymentStatus" placeholder="Payment Status">
-      <input id="paperwork" placeholder="Paperwork Checklist">
-      <input id="followUpDate" type="date">
-
-      <label class="uploadLabel" for="jobFiles">Add job photos or documents</label>
-      <input id="jobFiles" class="fileInput" type="file" multiple accept="image/*,.pdf,.doc,.docx">
-
-      <button onclick="saveServiceLog()">Save Job</button>
-      <button onclick="loadJobs()" class="ghostBtn">Pull Jobs</button>
-    </div>
-  </section>
-
-  <section id="dashTasks" class="dashPage hidden">
-    <div class="formCard">
-      <h3>Employee Task</h3>
-
-      <input id="taskTitle" placeholder="Task">
-      <input id="taskAssigned" placeholder="Assigned To">
-      <input id="taskDue" type="date">
-
-      <button onclick="saveTask()">Save Task</button>
-      <button onclick="loadTasks()" class="ghostBtn">Pull Tasks</button>
-    </div>
-  </section>
-
-  <section id="dashNotes" class="dashPage hidden">
-    <div class="formCard">
-      <h3>Internal Notes</h3>
-
-      <textarea id="internalNote" placeholder="Private shop note"></textarea>
-
-      <button onclick="saveInternalNote()">Save Note</button>
-      <button onclick="loadInternalNotes()" class="ghostBtn">Pull Notes</button>
-    </div>
-  </section>
-
-  <section id="dashRecords" class="dashPage hidden">
-    <div class="recordButtons">
-      <button onclick="loadCustomers()">Customers</button>
-      <button onclick="loadVehicles()">Vehicles / Projects</button>
-      <button onclick="loadAppointments()">Appointments</button>
-      <button onclick="loadEstimates()">Estimates</button>
-      <button onclick="loadJobs()">Jobs</button>
-      <button onclick="loadTasks()">Tasks</button>
-      <button onclick="loadInternalNotes()">Notes</button>
-    </div>
-  </section>
 
   <div id="results"></div>
+
 </section>
 
 </main>
 
-<footer>
-  <div class="footerGrid">
-    <div>
-      <h3>Bennett Built Automotive & Fab</h3>
-      <p>Repair. Fabrication. Diagnostics. Custom work.</p>
-      <p>Yeah... we can fix that.</p>
-    </div>
-
-    <div>
-      <h3>Contact</h3>
-      <p><a href="tel:5023700321">Call 502-370-0321</a></p>
-      <p><a href="sms:5023700321">Text 502-370-0321</a></p>
-    </div>
-
-    <div>
-      <h3>What we handle</h3>
-      <p>Vehicles. Equipment. Welding. Hydraulics. Pneumatics. Head-scratchers.</p>
-    </div>
-  </div>
-</footer>
+<!-- 📱 QUICK CONTACT -->
+<div class="quickBar">
+  <a href="tel:15023700321">Call</a>
+  <a href="sms:15023700321">Text</a>
+</div>
 
 <script type="module" src="app.js"></script>
+
 </body>
 </html>
