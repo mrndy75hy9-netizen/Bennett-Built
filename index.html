@@ -8,7 +8,13 @@
 
 <body>
 
+<a class="stickyCall" href="sms:5023700321">Text the Shop</a>
+
 <header class="siteHero">
+  <div class="heroFlag"></div>
+  <div class="heroTools"></div>
+  <div class="heroGlow"></div>
+
   <div class="heroOverlay">
     <div class="brandWrap">
       <div class="wideLogoFrame">
@@ -16,22 +22,22 @@
       </div>
 
       <div class="brandText">
-        <p class="eyebrow">Repair • Fabrication • Diagnostics • Custom Work</p>
+        <p class="eyebrow">Georgetown, Kentucky • Repair • Diagnostics • Fabrication</p>
         <h1>Bennett Built Automotive & Fab</h1>
         <p class="tagline">Yeah... we can fix that.</p>
 
         <p class="heroCopy">
-          For vehicles, equipment, custom work, and the stuff that should work but currently does not.
+          Vehicles, equipment, fabrication, hydraulics, no-starts, mystery noises, and the stuff that suddenly quit working.
         </p>
 
         <p class="heroCopy">
-          Sometimes it’s simple. Sometimes it turns into a whole thing. We go through it until it makes sense.
+          No guessing. No parts roulette. We figure out what’s actually wrong and tell you where it stands.
         </p>
 
         <div class="heroButtons">
           <button onclick="showTab('intake')">Tell Us What’s Going On</button>
           <button onclick="showTab('estimates')" class="accentBtn">Get a Ballpark</button>
-          <button onclick="showTab('loginArea')" class="ghostBtn">Shop Login</button>
+          <a class="buttonLink ghostBtn" href="sms:5023700321">Text 502-370-0321</a>
         </div>
       </div>
     </div>
@@ -39,34 +45,35 @@
 </header>
 
 <nav class="mainTabs">
-  <button onclick="showTab('home')">What’s Going On</button>
-  <button onclick="showTab('services')">What We Handle</button>
+  <button onclick="showTab('home')">Start Here</button>
+  <button onclick="showTab('services')">Services</button>
   <button onclick="showTab('intake')">It Ain’t Right</button>
-  <button onclick="showTab('appointments')">Get on the Schedule</button>
+  <button onclick="showTab('appointments')">Schedule</button>
   <button onclick="showTab('estimates')">Ballpark</button>
-  <button onclick="showTab('reviews')">What Folks Say</button>
+  <button onclick="showTab('reviews')">Reviews</button>
   <button onclick="showTab('meet')">The Bennetts</button>
-  <button onclick="showTab('loginArea')">Shop</button>
+  <button onclick="showTab('loginArea')">Shop Login</button>
 </nav>
 
 <main>
 
 <section id="home" class="tabPage">
+
   <div class="featureHero shopPanel">
     <div>
       <p class="eyebrow">Start here</p>
-      <h2>Some jobs are simple. Some ain’t.</h2>
+      <h2>Some jobs are simple. Some aren’t. We handle both.</h2>
 
       <p>
-        Stuff breaks. Sometimes it’s one part. Sometimes it’s three things stacked on top of each other pretending to be one part.
+        Sometimes it’s one bad part. Sometimes it’s three problems stacked together pretending to be one.
       </p>
 
       <p>
-        Sometimes it was fine yesterday. Sometimes it only acts up when nobody is there to hear it. Sometimes it already got “fixed” and somehow came back with new hobbies.
+        You don’t need to know the exact diagnosis before you call us. Tell us what happened, what changed, what it’s doing now, and what’s already been tried.
       </p>
 
       <p>
-        We don’t guess our way through it. We go through it, sort out what matters, and fix what’s actually wrong.
+        We’ll sort through it, tell you what makes sense, and be straight with you about what it needs.
       </p>
 
       <div class="sectionButtons">
@@ -76,11 +83,25 @@
     </div>
   </div>
 
+  <div class="trustBadges">
+    <div>Family Shop</div>
+    <div>Call or Text Friendly</div>
+    <div>No Parts Roulette</div>
+    <div>Straight Answers</div>
+  </div>
+
   <div class="processStrip">
-    <div>Tell us what’s going on</div>
-    <div>We sort through it</div>
-    <div>We fix what’s wrong</div>
-    <div>You know where it stands</div>
+    <div><span>01</span>Tell us what’s going on</div>
+    <div><span>02</span>We sort through it</div>
+    <div><span>03</span>We fix what’s wrong</div>
+    <div><span>04</span>You know where it stands</div>
+  </div>
+
+  <div class="garageGallery">
+    <div class="galleryCard diagnosticsPic">Diagnostics</div>
+    <div class="galleryCard repairPic">Repair</div>
+    <div class="galleryCard fabPic">Fabrication</div>
+    <div class="galleryCard hydroPic">Hydraulics</div>
   </div>
 
   <div class="quickGrid">
@@ -88,7 +109,7 @@
       <span>01</span>
       <h3>Bring it as-is</h3>
       <p>
-        It does not need to be explained perfectly. Send the real version: what happened, what changed, what’s been tried, and what you’re seeing now.
+        You don’t have to explain it perfectly. Send the real version: what happened, what changed, what you’ve noticed, and what has already been tried.
       </p>
     </div>
 
@@ -96,7 +117,7 @@
       <span>02</span>
       <h3>No parts roulette</h3>
       <p>
-        We are not here to throw parts at it and hope the problem gets bored. We check what needs checked and work from there.
+        We don’t throw parts at a problem and hope it gets tired. We check what needs checked and work from there.
       </p>
     </div>
 
@@ -104,61 +125,80 @@
       <span>03</span>
       <h3>No disappearing act</h3>
       <p>
-        Notes, photos, jobs, parts, and follow-ups stay together. No chasing ten text threads and a receipt from last Tuesday.
+        Notes, photos, parts, jobs, and follow-ups stay together. No chasing ten text threads and a receipt from last Tuesday.
       </p>
     </div>
   </div>
 
-  </div> <!-- end quickGrid -->
+  <div class="shopStrip">
+    <h3>If this sounds familiar...</h3>
+    <ul>
+      <li>“It only acts up sometimes.”</li>
+      <li>“It was just worked on.”</li>
+      <li>“It started after something else got fixed.”</li>
+      <li>“Nobody else could figure it out.”</li>
+      <li>“It’s making a noise, but not right now.”</li>
+    </ul>
+  </div>
 
-<div class="shopStrip">
-  <h3>If this sounds familiar…</h3>
-  <ul>
-    <li>“It only acts up sometimes”</li>
-    <li>“It was just worked on”</li>
-    <li>“It started after something else got fixed”</li>
-    <li>“Nobody else could figure it out”</li>
-    <li>“It’s making a noise but not right now”</li>
-  </ul>
-</div>
+  <div class="serviceMenuBoard">
+    <p class="eyebrow">Service board</p>
+    <h2>What we handle</h2>
 
-  <div class="servicePreview">
-    <h3>What we handle</h3>
-    <p>
-      Repairs, diagnostics, fabrication, equipment, hydraulics, motors, custom fixes, and the jobs that don’t fit neatly in a normal service box.
-    </p>
+    <div class="menuRows">
+      <div>
+        <strong>Diagnostics</strong>
+        <span>warning lights, no-starts, electrical issues, mystery symptoms</span>
+      </div>
 
-    <div class="servicePreviewGrid">
-      <div>Diagnostics</div>
-      <div>Repair</div>
-      <div>Fabrication</div>
-      <div>Hydraulics</div>
-      <div>Equipment</div>
-      <div>Custom Work</div>
+      <div>
+        <strong>Mechanical Repair</strong>
+        <span>brakes, suspension, leaks, cooling, engine-related work</span>
+      </div>
+
+      <div>
+        <strong>Fabrication & Welding</strong>
+        <span>brackets, mounts, repairs, sturdy custom fixes</span>
+      </div>
+
+      <div>
+        <strong>Hydraulics / Pneumatics</strong>
+        <span>lines, fittings, leaks, pressure problems</span>
+      </div>
+
+      <div>
+        <strong>Equipment / Motors</strong>
+        <span>work gear, machines, small equipment, motors</span>
+      </div>
+
+      <div>
+        <strong>Head-Scratchers</strong>
+        <span>half-fixed jobs, weird failures, oddball problems</span>
+      </div>
     </div>
 
-    <button onclick="showTab('services')">See the Full List</button>
+    <button onclick="showTab('services')">See Full Services</button>
   </div>
 
   <div class="homeSplit">
-    <div class="storyCard">
+    <div class="storyCard cozyCard">
       <h3>Small shop. Real people.</h3>
       <p>
-        No service desk shuffle. No “let me check with someone” while your message disappears into a black hole.
+        No service desk shuffle. No mystery middleman. No message disappearing into the void.
       </p>
       <p>
-        You talk to us. We handle it.
+        You talk to us. We keep it straight. If something needs done, we’ll tell you. If something can wait, we’ll tell you that too.
       </p>
       <button onclick="showTab('meet')" class="ghostBtn">Meet the Bennetts</button>
     </div>
 
-    <div class="storyCard">
-      <h3>Need a starting point?</h3>
+    <div class="storyCard photoGuideCard">
+      <h3>What to send us</h3>
       <p>
-        Send details and pictures. We’ll give you the best ballpark we can before it’s in front of us.
+        Photos of warning lights, leaks, damage, VIN plate, parts, paperwork, or the exact thing you’re trying to explain with hand gestures.
       </p>
       <p>
-        Better pictures. Better details. Better answer.
+        Better pictures. Better details. Better ballpark.
       </p>
       <button onclick="showTab('estimates')" class="accentBtn">Get a Ballpark</button>
     </div>
@@ -178,13 +218,8 @@
     <div>
       <p class="eyebrow">What we handle</p>
       <h2>The regular stuff, the custom stuff, and the “you gotta see this” stuff.</h2>
-
       <p>
         If it makes sense, we fix it. If it doesn’t make sense, we figure out why first.
-      </p>
-
-      <p>
-        Because “just replace this and see” gets expensive real quick.
       </p>
     </div>
   </div>
@@ -192,75 +227,58 @@
   <div class="serviceGrid">
     <div class="serviceCard">
       <h3>Diagnostics</h3>
-      <p>
-        Warning lights, no-starts, weird noises, electrical issues, mystery symptoms, and the classic “it only does it sometimes.”
-      </p>
-      <span>We track it down before throwing parts at it.</span>
+      <p>Warning lights, no-starts, weird noises, electrical issues, mystery symptoms, and the classic “it only does it sometimes.”</p>
+      <span>Track it down before replacing half the vehicle.</span>
     </div>
 
     <div class="serviceCard">
       <h3>Mechanical Repair</h3>
-      <p>
-        Brakes, suspension, cooling systems, engine-related work, maintenance, leaks, worn parts, and things that got loud enough to stop ignoring.
-      </p>
-      <span>Fix what’s worn, broken, loose, leaking, or about to ruin your day.</span>
+      <p>Brakes, suspension, cooling systems, leaks, worn parts, maintenance, and things that got loud enough to stop ignoring.</p>
+      <span>Fix what’s worn, broken, leaking, or about to ruin your day.</span>
     </div>
 
     <div class="serviceCard">
       <h3>Fabrication & Welding</h3>
-      <p>
-        Brackets, mounts, repairs, metal work, custom ideas, sturdy fixes, and “can we make this work?” projects.
-      </p>
+      <p>Brackets, mounts, repairs, metal work, custom ideas, sturdy fixes, and “can we make this work?” projects.</p>
       <span>Make it work. Make it hold. Make it right.</span>
     </div>
 
     <div class="serviceCard">
       <h3>Hydraulics / Pneumatics</h3>
-      <p>
-        Lines, fittings, pressure issues, system problems, motors, leaks, and equipment that picked the worst possible time to act up.
-      </p>
+      <p>Lines, fittings, pressure issues, leaks, motors, and equipment that picked the worst possible time to act up.</p>
       <span>Pressure problems handled without the guessing game.</span>
     </div>
 
     <div class="serviceCard">
       <h3>Equipment / Motors</h3>
-      <p>
-        Work gear, small equipment, motors, machines, and anything that needs to run because sitting there pretty ain’t helping anybody.
-      </p>
-      <span>For the stuff that has a job to do.</span>
+      <p>Work gear, machines, small equipment, motors, and the stuff that has a job to do.</p>
+      <span>If it needs to run, move, lift, pull, or work, start here.</span>
     </div>
 
     <div class="serviceCard">
       <h3>Head-Scratchers</h3>
-      <p>
-        Half-fixed jobs, hard-to-explain problems, mystery failures, oddball repairs, and things nobody wants to be responsible for.
-      </p>
+      <p>Half-fixed jobs, hard-to-explain problems, mystery failures, oddball repairs, and things nobody wants to be responsible for.</p>
       <span>We’re not scared of those.</span>
     </div>
   </div>
 
-  </div> <!-- end serviceGrid -->
-
-<div class="shopStrip">
-  <h3>What we don’t do</h3>
-  <ul>
-    <li>We don’t guess and throw parts at it</li>
-    <li>We don’t give a final price without seeing it</li>
-    <li>We don’t rush work just to get it out the door</li>
-    <li>We don’t pretend everything is a quick fix</li>
-  </ul>
-</div>
+  <div class="shopStrip">
+    <h3>What we don’t do</h3>
+    <ul>
+      <li>We don’t guess and throw parts at it.</li>
+      <li>We don’t give a final price without seeing it.</li>
+      <li>We don’t rush work just to get it out the door.</li>
+      <li>We don’t pretend every problem is a quick fix.</li>
+    </ul>
+  </div>
 
   <div class="disclaimerCard">
     <h3>About estimates</h3>
     <p>
-      We can give you a ballpark from what you send.
+      We can give you a ballpark from what you send. Until it’s actually in front of us, it’s an educated starting point, not a final answer.
     </p>
     <p>
-      Until it’s actually in front of us, it’s an educated guess, not a final answer.
-    </p>
-    <p>
-      Better details and better pictures make that guess a whole lot better.
+      Better details and better pictures make that starting point a whole lot better.
     </p>
   </div>
 </section>
@@ -270,33 +288,22 @@
     <div>
       <p class="eyebrow">Customer form</p>
       <h2>It ain’t right? Tell us what happened.</h2>
-
       <p>
         You don’t need shop vocabulary. You don’t need a diagnosis. Just tell us the real version.
-      </p>
-
-      <p>
-        Send what happened, what it’s doing now, what has already been tried, and anything you noticed before it went sideways.
       </p>
     </div>
   </div>
 
   <div class="shopStrip">
-  <h3>How this usually goes</h3>
-
-  <p>
-    Sometimes it’s quick. Sometimes it takes digging. Sometimes fixing one thing uncovers the next problem.
-  </p>
-
-  <p>
-    That’s normal. We’ll keep it straight with you the whole way through.
-  </p>
-</div>
-
-<div class="formCard">
+    <h3>What helps us help you</h3>
+    <p>
+      Tell us what changed, when it started, what it sounds like, what lights are on, what has already been replaced, and whether it comes and goes.
+    </p>
+  </div>
 
   <div class="formCard">
     <h3>Send the situation</h3>
+    <p id="customerStatus" class="statusLine"></p>
 
     <input id="custName" placeholder="Customer Name">
     <input id="custPhone" placeholder="Phone">
@@ -310,7 +317,7 @@
     <input id="custFiles" class="fileInput" type="file" multiple accept="image/*,.pdf,.doc,.docx">
 
     <p class="smallNote">
-      Helpful photos: warning lights, damage, leaks, VIN plate, parts, paperwork, or the exact thing you’re trying to explain with hand gestures.
+      Helpful photos: warning lights, damage, leaks, VIN plate, parts, paperwork, or anything hard to explain.
     </p>
 
     <button onclick="saveCustomer()">Send It Over</button>
@@ -322,19 +329,15 @@
     <div>
       <p class="eyebrow">Schedule</p>
       <h2>Need us to put eyes on it?</h2>
-
       <p>
         Send what’s going on and when you’re free. We’ll confirm before anything is officially on the schedule.
-      </p>
-
-      <p>
-        Surprise appointments are rude. We don’t do that.
       </p>
     </div>
   </div>
 
   <div class="formCard">
     <h3>Get on the schedule</h3>
+    <p id="appointmentStatus" class="statusLine"></p>
 
     <input id="apptName" placeholder="Name">
     <input id="apptPhone" placeholder="Phone">
@@ -360,19 +363,15 @@
     <div>
       <p class="eyebrow">Ballpark</p>
       <h2>Need a rough idea before you drag it over here?</h2>
-
       <p>
-        Send pictures, details, and the best explanation you’ve got.
-      </p>
-
-      <p>
-        We’ll give you a real starting point based on what we can see. Final answer comes after we actually get into it.
+        Send pictures, details, and the best explanation you’ve got. We’ll give you the most honest starting point we can.
       </p>
     </div>
   </div>
 
   <div class="formCard">
     <h3>Get a ballpark</h3>
+    <p id="estimateStatus" class="statusLine"></p>
 
     <input id="estName" placeholder="Name">
     <input id="estPhone" placeholder="Phone">
@@ -396,9 +395,8 @@
     <div>
       <p class="eyebrow">What folks say</p>
       <h2>Good work. Straight answers. No runaround.</h2>
-
       <p>
-        Reviews will go here once the real links are ready. No fake testimonial circus.
+        Real reviews will go here once the links are ready. No fake testimonial circus.
       </p>
     </div>
   </div>
@@ -419,12 +417,6 @@
       <p>Had work done? Tell us how it went.</p>
     </div>
   </div>
-
-  <div class="reviewCTA">
-    <h3>Had work done with Bennett Built?</h3>
-    <p>We’ll add the real review link here once it’s ready.</p>
-    <button onclick="showTab('intake')">Tell Us What Went Right</button>
-  </div>
 </section>
 
 <section id="meet" class="tabPage hidden">
@@ -432,9 +424,8 @@
     <div>
       <p class="eyebrow">Small shop. Real people.</p>
       <h2>Meet the Bennetts</h2>
-
       <p>
-        No service desk shuffle. No mystery middleman. You talk to us, we handle it.
+        No service desk shuffle. No mystery middleman. You talk to us, and we keep the details together.
       </p>
     </div>
   </div>
@@ -443,19 +434,12 @@
     <div class="storyCard">
       <h3>Ivan Bennett</h3>
       <p class="roleTitle">Mechanic • Fabrication • Problem Solver</p>
-
       <p>
         Ivan has over 20 years of hands-on experience fixing, building, fabricating, and figuring out problems that don’t always make sense at first glance.
       </p>
-
       <p>
         He’s the one people call when the easy fix didn’t fix anything.
       </p>
-
-      <p>
-        No guessing. No parts roulette. He figures out what’s actually wrong, then fixes it.
-      </p>
-
       <p>
         Some jobs need tools. Some need time. Some need someone willing to stand there, stare at it, and not pretend the first answer is always the right one.
       </p>
@@ -464,15 +448,12 @@
     <div class="storyCard">
       <h3>Nancy Bennett</h3>
       <p class="roleTitle">Business Side • Customer Support</p>
-
       <p>
         Nancy keeps the business side from turning into a pile of notes, screenshots, parts, and “wait, who was that again?”
       </p>
-
       <p>
         Customers, jobs, follow-ups, details. Nothing important gets ignored on purpose, and a whole lot less gets lost.
       </p>
-
       <p>
         If you get clear answers, updates, and the details are where they’re supposed to be, that’s probably her.
       </p>
@@ -485,7 +466,6 @@
     <div>
       <p class="eyebrow">Shop access</p>
       <h2>Employee side.</h2>
-
       <p>
         Jobs, notes, photos, parts, follow-ups. The stuff that keeps work from living in six different text threads.
       </p>
@@ -517,17 +497,8 @@
   <section id="dashOverview" class="dashPage">
     <div class="dashboardHeader">
       <h2>Shop Dashboard</h2>
-
       <p>
-        Everything in one place.
-      </p>
-
-      <p>
-        Customers. Jobs. Notes. Parts. Photos. Follow-ups.
-      </p>
-
-      <p>
-        No digging through texts. No guessing what’s going on. No “I thought you had that.”
+        Customers. Jobs. Notes. Parts. Photos. Follow-ups. Everything in one place.
       </p>
     </div>
 
@@ -547,6 +518,7 @@
   <section id="dashJobs" class="dashPage hidden">
     <div class="formCard">
       <h3>Create Job</h3>
+      <p id="jobStatusLine" class="statusLine"></p>
 
       <input id="jobCustomer" placeholder="Customer name">
       <input id="jobVehicle" placeholder="Vehicle, equipment, or project">
@@ -630,18 +602,18 @@
     <div>
       <h3>Bennett Built Automotive & Fab</h3>
       <p>Repair. Fabrication. Diagnostics. Custom work.</p>
-      <p>For the stuff that should work and currently does not.</p>
       <p>Yeah... we can fix that.</p>
+    </div>
+
+    <div>
+      <h3>Contact</h3>
+      <p><a href="tel:5023700321">Call 502-370-0321</a></p>
+      <p><a href="sms:5023700321">Text 502-370-0321</a></p>
     </div>
 
     <div>
       <h3>What we handle</h3>
       <p>Vehicles. Equipment. Welding. Hydraulics. Pneumatics. Head-scratchers.</p>
-    </div>
-
-    <div>
-      <h3>Need help?</h3>
-      <p>Start with “It Ain’t Right,” “Get on the Schedule,” or “Ballpark.” We’ll go from there.</p>
     </div>
   </div>
 </footer>
