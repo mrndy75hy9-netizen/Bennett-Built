@@ -1251,3 +1251,271 @@ button:hover {
   transform: skewX(-20deg);
   pointer-events: none;
 }
+
+/* =====================================================
+   PUSH GRAPHICS FURTHER: SHOP BUILT / METAL / WELD LOOK
+   Paste at VERY BOTTOM of style.css
+===================================================== */
+
+/* gritty page texture */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  opacity: 0.16;
+  background:
+    radial-gradient(circle at 18% 12%, rgba(255,255,255,0.08), transparent 18%),
+    radial-gradient(circle at 88% 72%, rgba(255,145,55,0.08), transparent 20%),
+    repeating-linear-gradient(
+      45deg,
+      transparent 0 18px,
+      rgba(255,255,255,0.04) 19px,
+      transparent 22px
+    );
+}
+
+/* tire-track side shadows */
+body::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 130px;
+  pointer-events: none;
+  opacity: 0.08;
+  z-index: -1;
+  background:
+    repeating-linear-gradient(
+      135deg,
+      transparent 0 14px,
+      rgba(255,255,255,0.8) 15px 20px,
+      transparent 21px 36px
+    );
+}
+
+/* steel plate section headers */
+.featureHero,
+.pageBanner,
+.servicePreview,
+.ctaBlock,
+.shopStrip {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(190,220,235,0.35);
+  box-shadow:
+    0 20px 50px rgba(0,0,0,0.62),
+    inset 0 1px 0 rgba(255,255,255,0.09),
+    inset 0 -20px 40px rgba(0,0,0,0.22);
+}
+
+/* brushed metal overlay */
+.featureHero::before,
+.pageBanner::before,
+.servicePreview::before,
+.ctaBlock::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.35;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      rgba(255,255,255,0.055) 0 2px,
+      transparent 2px 13px
+    ),
+    linear-gradient(
+      120deg,
+      transparent 0%,
+      rgba(255,255,255,0.08) 42%,
+      transparent 54%
+    );
+}
+
+/* keeps text above overlays */
+.featureHero > *,
+.pageBanner > *,
+.servicePreview > *,
+.ctaBlock > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* weld bead accent under headings */
+h2::after,
+.servicePreview h3::after,
+.ctaBlock h3::after,
+.shopStrip h3::after {
+  content: "";
+  display: block;
+  width: 150px;
+  height: 4px;
+  margin-top: 10px;
+  border-radius: 999px;
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(255,145,55,0.95),
+      rgba(255,230,170,0.95),
+      rgba(255,145,55,0.95),
+      transparent
+    );
+  box-shadow:
+    0 0 12px rgba(255,145,55,0.65),
+    0 0 28px rgba(255,145,55,0.25);
+}
+
+/* center weld bead only on centered CTA */
+.ctaBlock h3::after {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* rivet corners on cards */
+.miniCard::after,
+.serviceCard::after,
+.formCard::after,
+.storyCard::after,
+.reviewCard::after {
+  content: "";
+  position: absolute;
+  inset: 13px;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at top left, rgba(220,240,255,0.55) 0 3px, transparent 4px),
+    radial-gradient(circle at top right, rgba(220,240,255,0.38) 0 3px, transparent 4px),
+    radial-gradient(circle at bottom left, rgba(220,240,255,0.30) 0 3px, transparent 4px),
+    radial-gradient(circle at bottom right, rgba(220,240,255,0.28) 0 3px, transparent 4px);
+}
+
+/* card edge glow */
+.miniCard,
+.serviceCard,
+.formCard,
+.storyCard,
+.reviewCard {
+  position: relative;
+  overflow: hidden;
+}
+
+.miniCard::before,
+.serviceCard::before,
+.formCard::before,
+.storyCard::before,
+.reviewCard::before {
+  content: "";
+  position: absolute;
+  left: 18px;
+  right: 18px;
+  top: 0;
+  height: 3px;
+  border-radius: 999px;
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(111,154,184,0.75),
+      rgba(255,145,55,0.55),
+      transparent
+    );
+  box-shadow: 0 0 14px rgba(255,145,55,0.18);
+}
+
+/* service preview blocks look like stamped tags */
+.servicePreviewGrid div,
+.processStrip div {
+  position: relative;
+  overflow: hidden;
+  border-radius: 14px;
+  background:
+    linear-gradient(180deg, rgba(75,115,140,0.95), rgba(12,26,38,0.98)),
+    repeating-linear-gradient(
+      135deg,
+      rgba(255,255,255,0.07) 0 2px,
+      transparent 2px 8px
+    );
+  border: 1px solid rgba(200,230,250,0.35);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.18),
+    0 10px 20px rgba(0,0,0,0.42);
+}
+
+/* little stamped notch */
+.servicePreviewGrid div::before,
+.processStrip div::before {
+  content: "";
+  position: absolute;
+  width: 34px;
+  height: 34px;
+  right: -12px;
+  top: -12px;
+  transform: rotate(45deg);
+  background: rgba(255,145,55,0.18);
+  border: 1px solid rgba(255,177,74,0.25);
+}
+
+/* hover depth */
+.miniCard:hover,
+.serviceCard:hover,
+.storyCard:hover,
+.reviewCard:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    0 24px 58px rgba(0,0,0,0.7),
+    0 0 22px rgba(111,154,184,0.16),
+    inset 0 1px 0 rgba(255,255,255,0.09);
+}
+
+/* warm sparks in hero */
+.brandWrap::before,
+.brandWrap::after {
+  content: "";
+  position: absolute;
+  width: 150px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(255,177,74,0.95), transparent);
+  opacity: 0.8;
+  box-shadow:
+    0 0 12px rgba(255,177,74,0.75),
+    0 0 30px rgba(255,145,55,0.28);
+  transform: rotate(-18deg);
+}
+
+.brandWrap::before {
+  top: 26px;
+  right: -24px;
+}
+
+.brandWrap::after {
+  bottom: 28px;
+  left: -30px;
+}
+
+/* stronger logo frame */
+.wideLogoFrame {
+  border: 1px solid rgba(210,235,248,0.42);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.12),
+    inset 0 -18px 35px rgba(0,0,0,0.32),
+    0 20px 46px rgba(0,0,0,0.68),
+    0 0 40px rgba(111,154,184,0.16);
+}
+
+/* mobile cleanup */
+@media (max-width: 900px) {
+  body::after {
+    width: 60px;
+    opacity: 0.05;
+  }
+
+  h2::after,
+  .servicePreview h3::after,
+  .ctaBlock h3::after,
+  .shopStrip h3::after {
+    width: 110px;
+  }
+}
